@@ -2,15 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FormData : MonoBehaviour 
+public static class Globals
 {
-	public const int _maxFormData = 16;
-	public const int  _maxForms = 128;
-	public const int  FormQuantum = 16;
-	public const int  KeyNoteBucket = 16;
-
-
-	enum _notes
+	public enum _notes
 	{
 		NOTE_E = 0,
 		NOTE_F,         //1
@@ -27,6 +21,21 @@ public class FormData : MonoBehaviour
 		NOTE_E2,        //12
 
 	};
+
+	public const int MaxFrets = 25;
+	public const int MaxStrings = 6;
+	public const int MaxLevels = 8;
+	public const int _maxFormData = 16;
+	public const int _maxForms = 128;
+	public const int FormQuantum = 16;
+	public const int KeyNoteBucket = 16;
+	public const int OctaveLen = 12;
+}
+
+public class FormData : MonoBehaviour 
+{
+
+
 
 	[HideInInspector]
 	public int[] gFormData = new int[]
@@ -506,9 +515,9 @@ public class FormData : MonoBehaviour
 
 	private void GetFormData(ref int[] tableData, int formIndex)
 	{	
-		for(int k = 0; k < _maxFormData; k++)
+		for(int k = 0; k < Globals._maxFormData; k++)
 		{
-			tableData[k] = gFormData[formIndex * FormQuantum + k];
+			tableData[k] = gFormData[formIndex * Globals.FormQuantum + k];
 		}
 	}
 
@@ -516,31 +525,27 @@ public class FormData : MonoBehaviour
 	{
 		string intervalString = "";
 
-		int[] intervalData = new int[_maxFormData] {0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0}; 
+		int[] intervalData = new int[Globals._maxFormData] {0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0}; 
 
-		//int intervalData[16] = {0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0};
+		int[] bucketData = new int[Globals._maxFormData];
 
-		int[] bucketData = new int[_maxFormData];
-		//int bucketData[16];
-		int numInBucket =  GetKeyNoteBucket((int)_notes.NOTE_E, index, ref bucketData, ref intervalData);
-
+		int numInBucket =  GetKeyNoteBucket((int)Globals._notes.NOTE_E, index, ref bucketData, ref intervalData);
 
 		string miniBuf = gIntervalText[intervalData[0]];
 		for(int i = 1; i < numInBucket+1; i++)
 		{
 			intervalString += " " + miniBuf;
 			miniBuf = gIntervalText[intervalData[i]];
-
 		}
 
 		return intervalString;
 
 	}
 
-	private int GetKeyNoteBucket(int key, int formIndex, ref int[] bucketData, ref int[] intervalData)
+	public int GetKeyNoteBucket(int key, int formIndex, ref int[] bucketData, ref int[] intervalData)
 	{
-		//CCLOG("GetKeyNoteBucket Key = %d", key);
-		int[] formData = new int[_maxFormData]; 
+		Debug.Log("GetKeyNoteBucket Key = " + key);
+		int[] formData = new int[Globals._maxFormData]; 
 		GetFormData(ref formData, formIndex);
 
 		int _keyNote = key;
@@ -549,7 +554,7 @@ public class FormData : MonoBehaviour
 		int _index = 0;
 
 		bucketData[_index++] = _keyNote;
-		for(int k = 0; k < _maxFormData; k++)
+		for(int k = 0; k < Globals._maxFormData; k++)
 		{
 			int _interval = formData[k];
 
@@ -562,20 +567,19 @@ public class FormData : MonoBehaviour
 					break;
 				}
 			}
-			//CCLOG("_keyNote = %d + _interval = %d", _keyNote, _interval);
+			Debug.Log("_keyNote = " + _keyNote + " _interval = " + _interval);
 
 			_keyNote += _interval;
-			if(_keyNote > (int)_notes.NOTE_DS)
+			if(_keyNote > (int)Globals._notes.NOTE_DS)
 			{
-				//CCLOG("......_keyNote > NOTE_DS :: _keyNote = %d : _interval = %d", _keyNote, _interval);
+				Debug.Log("......_keyNote > NOTE_DS :: _keyNote = " + _keyNote + " _interval = " + _interval);
 
-				_keyNote = _keyNote - (int)_notes.NOTE_E2;
-				//CCLOG("......_keyNote = %d", _keyNote);
+				_keyNote = _keyNote - (int)Globals._notes.NOTE_E2;
+				Debug.Log("......_keyNote = " + _keyNote);
 			}
 
 
-			//CCLOG("Store _keyNote = %d at Index = %d", _keyNote, _index);
-			//CCLOG(" ");
+			Debug.Log("Store _keyNote = " + _keyNote + " _index = " + _index);
 			bucketData[_index] = _keyNote;
 
 
@@ -587,10 +591,19 @@ public class FormData : MonoBehaviour
 		return _index;
 	}
 		
+
+	public static FormData Instance;
+
+	void Awake () 
+	{
+		Instance = this;
+
+	}
+
 	// Use this for initialization
 	void Start () {
 
-		int[] tdat = new int[_maxFormData]; 
+		int[] tdat = new int[Globals._maxFormData]; 
 		GetFormData(ref tdat, 0);
 
 		Debug.Log(tdat[0].ToString() + tdat[1] + tdat[2] + tdat[3] + tdat[4] + tdat[5] + tdat[6] + tdat[7] + tdat[8] + tdat[9]); 
