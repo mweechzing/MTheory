@@ -61,6 +61,15 @@ public class NeckDraw : MonoBehaviour
 		
 	}
 
+	public void ReApplyForm(int formIndex)
+	{
+		GuitarNeck.Instance.Clear ();
+		GuitarNeck.Instance.ApplyForm (0, formIndex, 0);
+
+		QuerySetObjectsResetColor ();
+		ApplyForm ();
+	}
+
 
 	private void LoadMarkerObjects()
 	{
