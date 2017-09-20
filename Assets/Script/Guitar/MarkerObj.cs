@@ -60,5 +60,18 @@ public class MarkerObj : MonoBehaviour
 		}
 	}		
 
+	public void SetMarkerLabel(string label) 
+	{
+		TextMeshPro tp = GetComponentInChildren<TextMeshPro> ();
+
+		tp.SetText (label);
+	}	
+
+	public void SetVisibleStatus(bool status)
+	{
+		gameObject.SetActive (status);
+	}
+		
+
 }
 

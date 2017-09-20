@@ -130,7 +130,7 @@ public class NeckDraw : MonoBehaviour
 			float x = gridStartX + xOffset;
 			float y = gridStartY + yOffset;
 
-			objectScript.SetGridPosition (new Vector3(x,y,1));
+			objectScript.SetGridPosition (new Vector3(x,y,-0.5f));
 			objectScript.NoteName = noteIndex;
 
 			yOffset += FretGridDY;
@@ -169,17 +169,17 @@ public class NeckDraw : MonoBehaviour
 
 			//Debug.LogError ("ApplyForm note = " + note);
 
-			//int interval = GuitarNeck.Instance.GetInterval (0, f);
+			int interval = GuitarNeck.Instance.GetInterval (0, f);
 
 			if (GuitarNeck.Instance.GetNoteStatus (0, f) > 0) {
 					
-				QueryApplyNoteToOn (note);
+				QueryApplyNoteToOn (note, interval);
 			}
 
 		}
 	}
 
-	void QueryApplyNoteToOn(int note)
+	void QueryApplyNoteToOn(int note, int interval)
 	{
 		Debug.LogError ("QueryApplyNoteToOn note = " + note);
 
@@ -191,8 +191,9 @@ public class NeckDraw : MonoBehaviour
 
 			if (noteIndex == note) {
 			
+				objectScript.SetVisibleStatus (true);
 				objectScript.SetObjectColor (0, 128, 255, 255);
-
+				objectScript.SetMarkerLabel (note.ToString());
 			}
 
 		}
@@ -204,6 +205,7 @@ public class NeckDraw : MonoBehaviour
 		foreach(GameObject tObj in MarkerObjectList)
 		{
 			MarkerObj objectScript = tObj.GetComponent<MarkerObj> ();
+			objectScript.SetVisibleStatus (false);
 			objectScript.SetObjectColor (255, 255, 255, 0);
 		}
 	}
