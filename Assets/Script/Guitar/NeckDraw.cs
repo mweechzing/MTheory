@@ -140,6 +140,7 @@ public class NeckDraw : MonoBehaviour
 
 				//default storage location
 				_sfObj.transform.position = new Vector2 (StoragePosition.transform.position.x, StoragePosition.transform.position.y);
+				_sfObj.transform.localScale = new Vector2 (StoragePosition.transform.localScale.x, StoragePosition.transform.localScale.y);
 
 				MarkerObj objectScript = _sfObj.GetComponent<MarkerObj> ();
 				objectScript.ID = t;

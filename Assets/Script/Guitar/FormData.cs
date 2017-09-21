@@ -49,6 +49,8 @@ public class FormData : MonoBehaviour
 		2,1,2,2,1,2,2,8,0,0,0,0,  0,0,0,0,	//minor
 		1,2,2,1,2,2,2,8,0,0,0,0,  0,0,0,0,	//locrian
 
+		0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
+
 		//0,8,0,0,0,0,0,0,0,0,0,0,  1,1,0,0,	//Label - Harmonic Minor Scale and Modes
 		2,1,2,2,1,3,1,8,0,0,0,0,  0,1,0,0,	//harmonic minor
 		1,2,2,1,3,1,2,8,0,0,0,0,  0,0,0,0,	//hm 2
@@ -57,6 +59,8 @@ public class FormData : MonoBehaviour
 		1,3,1,2,1,2,2,8,0,0,0,0,  0,0,0,0,	//hm 5
 		3,1,2,1,2,2,1,8,0,0,0,0,  0,0,0,0,	//hm 6
 		1,2,1,2,2,1,3,8,0,0,0,0,  0,0,0,0,	//hm 7
+
+		0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
 
 		//0,8,0,0,0,0,0,0,0,0,0,0,  1,1,0,0,	//Label - Melodic Minor Scale and Modes
 		2,1,2,2,2,2,1,8,0,0,0,0,  0,1,0,0,	//melodic minor
@@ -223,6 +227,8 @@ public class FormData : MonoBehaviour
 		"Aeolian",
 		"Locrian",
 
+		"space",
+
 		//@"Harmonic Minor Scale & Modes",
 		"Harmonic Minor",
 		"H.M.2",
@@ -231,6 +237,8 @@ public class FormData : MonoBehaviour
 		"H.M.5",
 		"H.M.6",
 		"H.M.7",
+
+		"space",
 
 		//@"Melodic Minor Scale & Modes",
 		"Melodic Minor",
@@ -544,7 +552,7 @@ public class FormData : MonoBehaviour
 
 	public int GetKeyNoteBucket(int key, int formIndex, ref int[] bucketData, ref int[] intervalData)
 	{
-		Debug.Log("GetKeyNoteBucket Key = " + key);
+		//Debug.Log("GetKeyNoteBucket Key = " + key);
 		int[] formData = new int[Globals._maxFormData]; 
 		GetFormData(ref formData, formIndex);
 
@@ -567,19 +575,19 @@ public class FormData : MonoBehaviour
 					break;
 				}
 			}
-			Debug.Log("_keyNote = " + _keyNote + " _interval = " + _interval);
+			//Debug.Log("_keyNote = " + _keyNote + " _interval = " + _interval);
 
 			_keyNote += _interval;
 			if(_keyNote > (int)Globals._notes.NOTE_DS)
 			{
-				Debug.Log("......_keyNote > NOTE_DS :: _keyNote = " + _keyNote + " _interval = " + _interval);
+				//Debug.Log("......_keyNote > NOTE_DS :: _keyNote = " + _keyNote + " _interval = " + _interval);
 
 				_keyNote = _keyNote - (int)Globals._notes.NOTE_E2;
-				Debug.Log("......_keyNote = " + _keyNote);
+				//Debug.Log("......_keyNote = " + _keyNote);
 			}
 
 
-			Debug.Log("Store _keyNote = " + _keyNote + " _index = " + _index);
+			//Debug.Log("Store _keyNote = " + _keyNote + " _index = " + _index);
 			bucketData[_index] = _keyNote;
 
 
@@ -600,21 +608,17 @@ public class FormData : MonoBehaviour
 
 	}
 
-	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 
 		int[] tdat = new int[Globals._maxFormData]; 
 		GetFormData(ref tdat, 0);
 
-		Debug.Log(tdat[0].ToString() + tdat[1] + tdat[2] + tdat[3] + tdat[4] + tdat[5] + tdat[6] + tdat[7] + tdat[8] + tdat[9]); 
+		//Debug.Log(tdat[0].ToString() + tdat[1] + tdat[2] + tdat[3] + tdat[4] + tdat[5] + tdat[6] + tdat[7] + tdat[8] + tdat[9]); 
 
 
 		string intervalText = GetFormIntervalString(0);
-		Debug.Log(intervalText);
+		//Debug.Log(intervalText);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

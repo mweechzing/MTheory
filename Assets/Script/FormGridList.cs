@@ -27,13 +27,15 @@ public class FormGridList : MonoBehaviour
 
 	void Start () 
 	{
-		LoadMarkerObjects ();
+		//LoadFormButtonObjects ();
+		SetFormButtonObjects();
 	}
 	
 	void Update () 
 	{}
 
-	private void LoadMarkerObjects()
+	//reprecated
+	private void LoadFormButtonObjects()
 	{
 		for (int t = 0; t < 100; t++) {
 
@@ -55,6 +57,27 @@ public class FormGridList : MonoBehaviour
 			}
 		}
 	}
+
+	private void SetFormButtonObjects()
+	{
+		GridLayoutGroup glg = GetComponentInChildren<GridLayoutGroup> ();
+
+		Button[] glgButtons = glg.GetComponentsInChildren<Button> ();
+
+		int findex = 0;
+		foreach(Button bObj in glgButtons)
+		{
+			FormButton objectScript = bObj.GetComponent<FormButton> ();
+
+			objectScript.FormIndex = findex;
+
+			objectScript.Refresh ();
+
+			findex++;
+		}
+
+	}
+		
 
 	public void SetSelectedFormIndex(int fIndex)
 	{
