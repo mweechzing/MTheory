@@ -24,6 +24,8 @@ public class NeckDraw : MonoBehaviour
 	private GameObject FretPanelObjectContainer;
 
 
+	private float targetScale = 1.0f;
+	private float sizeScale = 0.5f;
 
 
 	private const float TargetScreenWidth = 1536.0f;//standard retina
@@ -51,7 +53,7 @@ public class NeckDraw : MonoBehaviour
 		Resolution screenRes = Screen.currentResolution;
 		float screenWidth = screenRes.width;
 
-		float targetScale = TargetScreenWidth;
+		targetScale = TargetScreenWidth;
 
 		Debug.LogError(Screen.currentResolution);
 
@@ -62,6 +64,7 @@ public class NeckDraw : MonoBehaviour
 
 		gameObject.transform.localScale = new Vector2 (targetScale, targetScale);
 		#endif
+
 
 		MarkerObjectContainer = GameObject.Find ("MarkerObjectContainer");
 		FretPanelObjectContainer = GameObject.Find ("FretPanelObjectContainer");
@@ -87,10 +90,18 @@ public class NeckDraw : MonoBehaviour
 		ApplyForm ();
 	}
 	
-	// Update is called once per frame
-	void Update () 
+	public void ToggleNeckScale () 
 	{
-		
+		if (sizeScale == 0.5f) {
+			sizeScale = 1f;
+		} else {
+			sizeScale = 0.5f;
+		}
+
+		float s = targetScale * sizeScale;
+		Debug.Log ("ToggleNeckScale new scale = " + s);
+
+		gameObject.transform.localScale = new Vector2 (s, s);
 	}
 
 	public void ReApplyForm(int formIndex)
@@ -124,6 +135,12 @@ public class NeckDraw : MonoBehaviour
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
 	}
+
+	public int GetCurrentKey()
+	{
+		return CurrentKey;
+	}
+
 
 	private void LoadMarkerObjects()
 	{

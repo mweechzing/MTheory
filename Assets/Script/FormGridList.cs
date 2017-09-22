@@ -85,7 +85,12 @@ public class FormGridList : MonoBehaviour
 
 		string formText = FormData.Instance.gFormText [fIndex];
 
-		InfoPanel.SetText (formText);
+		int keyIndex = NeckDraw.Instance.GetCurrentKey ();
+
+		string noteText = FormData.Instance.gKeyNamesSharp[keyIndex];
+
+
+		InfoPanel.SetText (noteText + " " + formText);
 	}
 
 	public void ButtonGO()
@@ -96,10 +101,15 @@ public class FormGridList : MonoBehaviour
 		NeckDraw.Instance.ReApplyForm (_selectedformIndex);
 
 		gameObject.SetActive (false);
+
+		TapPad.Instance.DragEnabled = true;
+
 	}
 
 	public void ButtonShowSelf()
 	{
+		TapPad.Instance.DragEnabled = false;
+
 		gameObject.SetActive (true);
 	}
 
