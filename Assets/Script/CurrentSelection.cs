@@ -21,23 +21,20 @@ public class CurrentSelection : MonoBehaviour
 		int formIndex = NeckDraw.Instance.GetCurrentFormIndex ();
 		string formText = FormData.Instance.gFormText [formIndex];
 
-		int len = formText.Length;
 
 		int keyIndex = NeckDraw.Instance.GetCurrentKey ();
 		string noteText = FormData.Instance.gKeyNamesSharp[keyIndex];
 
+		int len = formText.Length;
 		if(len > 20) {
 			InfoPanel.fontSize = 36;
 			InfoPanel2.fontSize = 50;
-			//InfoPanel.resizeTextMaxSize = 30;
-		} else {
-		
+		} else {		
 			InfoPanel.fontSize = 48;
 			InfoPanel2.fontSize = 60;
 		}
-
-
-		InfoPanel.SetText (noteText + " " + formText);
-		InfoPanel2.SetText (noteText + " " + formText);
+			
+		InfoPanel.SetText (noteText + "  " + formText);
+		InfoPanel2.SetText (noteText + "  " + formText);
 	}
 }

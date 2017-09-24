@@ -520,12 +520,13 @@ public class FormData : MonoBehaviour
 	[HideInInspector]
 	public string[] gNoteGraphicStyleText = new string[]
 	{
-		"A",
-		"B",
-		"C",
-		"D",
-		"E",
-		"F",
+		"1",
+		"2",
+		"3",
+		"4",
+		"5",
+		"6",
+		"7",
 	};
 
 	public string GetFormNameAtIndex(int index)
