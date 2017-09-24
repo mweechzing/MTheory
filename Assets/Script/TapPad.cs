@@ -60,6 +60,8 @@ public class TapPad : MonoBehaviour
 			ms = Input.mousePosition;
 			dragOffset = Camera.main.ScreenToWorldPoint(ms);
 
+			//dragOffset.y *= -1f;
+
 			//Debug.Log ("dragOffset.y = " + dragOffset.y);
 		}
 
@@ -67,6 +69,7 @@ public class TapPad : MonoBehaviour
 		Vector3 currentPoint = Camera.main.ScreenToWorldPoint(ms);
 
 		float dOffset = dragOffset.y - currentPoint.y;
+		//float dOffset = currentPoint.y - dragOffset.y;
 
 		//Debug.Log ("...........startPoint.y = " + startPoint.y + " currentPoint.y = " + currentPoint.y + " dOffset = " + dOffset);
 
