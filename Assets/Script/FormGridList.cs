@@ -10,6 +10,8 @@ public class FormGridList : MonoBehaviour
 
 	public GameObject GoButton;
 
+	public ColorSet FormColorCodes;
+
 	private int _selectedformIndex = 0;
 	public int SelectedFormIndex {
 		get {return _selectedformIndex; } 
@@ -33,7 +35,7 @@ public class FormGridList : MonoBehaviour
 	void Update () 
 	{}
 
-	//reprecated
+	//deprecated
 	private void LoadFormButtonObjects()
 	{
 		for (int t = 0; t < 100; t++) {
@@ -63,11 +65,19 @@ public class FormGridList : MonoBehaviour
 
 		Button[] glgButtons = glg.GetComponentsInChildren<Button> ();
 
+		int colorIndex = 0;
 		int findex = 0;
 		foreach(Button bObj in glgButtons)
 		{
+			string formText = FormData.Instance.gFormText [findex];
+			if (formText == "space") {
+				colorIndex = FormData.Instance.gFormData [findex * Globals.FormQuantum];
+				findex++;
+			}
+				
 			FormButton objectScript = bObj.GetComponent<FormButton> ();
 			objectScript.FormIndex = findex;
+			objectScript.ColorIndex = colorIndex;
 			objectScript.Refresh ();
 			findex++;
 		}
@@ -87,5 +97,59 @@ public class FormGridList : MonoBehaviour
 		gameObject.SetActive (true);
 	}
 
+	public Color GetColorCodeForIndex(int index)
+	{
+		return( GetColorFromSet(FormColorCodes, index));
+	}
+
+	
+	private Color GetColorFromSet(ColorSet cs, int index)
+	{
+		Color rc = cs.Color1;
+		switch(index)
+		{
+		case 0:
+			rc = cs.Color1;
+			break;
+		case 1:
+			rc = cs.Color2;
+			break;
+		case 2:
+			rc = cs.Color3;
+			break;
+		case 3:
+			rc = cs.Color4;
+			break;
+		case 4:
+			rc = cs.Color5;
+			break;
+		case 5:
+			rc = cs.Color6;
+			break;
+		case 6:
+			rc = cs.Color7;
+			break;
+		case 7:
+			rc = cs.Color8;
+			break;
+		case 8:
+			rc = cs.Color9;
+			break;
+		case 9:
+			rc = cs.Color10;
+			break;
+		case 10:
+			rc = cs.Color11;
+			break;
+		case 11:
+			rc = cs.Color12;
+			break;
+		case 12:
+			rc = cs.ColorText;
+			break;
+		}
+
+		return rc;
+	}
 
 }

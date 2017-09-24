@@ -463,7 +463,7 @@ public class NeckDraw : MonoBehaviour
 		case 3:
 			rc = cs.Color4;
 			break;
-		case 44:
+		case 4:
 			rc = cs.Color5;
 			break;
 		case 5:

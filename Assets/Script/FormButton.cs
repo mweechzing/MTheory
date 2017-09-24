@@ -10,26 +10,39 @@ public class FormButton : MonoBehaviour
 		get {return _formIndex; } 
 		set {_formIndex = value; }
 	}
+
+	private int _colorIndex = 0;
+	public int ColorIndex {
+		get {return _colorIndex; } 
+		set {_colorIndex = value; }
+	}
+
+
 	void Start () 
 	{
-		Refresh ();
+		//Refresh ();
 	}
 	
 	public void Refresh () 
 	{
 		string formText = FormData.Instance.gFormText [FormIndex];
 
+		int len = formText.Length;
+		Debug.LogError("formText = " + formText + "  len = " + len + " FormIndex = " + FormIndex);
 		Text[] buttonText = GetComponentsInChildren <Text> ();
 		buttonText[0].text = formText;
 
-		if (formText == "space") {
-
-			buttonText[0].text = " ";
-
-			Button b = GetComponent<Button> ();
-			b.interactable = false;
-
+		if(len > 10) {
+			buttonText[0].fontSize = 30;
+			buttonText[0].resizeTextMaxSize = 30;
 		}
+
+
+		Color newColor = FormGridList.Instance.GetColorCodeForIndex(ColorIndex);
+		Button button = GetComponent<Button>();
+		ColorBlock cb = button.colors;
+		cb.normalColor = newColor;
+		button.colors = cb;
 
 	}
 

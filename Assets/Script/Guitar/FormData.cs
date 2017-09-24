@@ -49,7 +49,7 @@ public class FormData : MonoBehaviour
 		2,1,2,2,1,2,2,8,0,0,0,0,  0,0,0,0,	//minor
 		1,2,2,1,2,2,2,8,0,0,0,0,  0,0,0,0,	//locrian
 
-		0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
+		1,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
 
 		//0,8,0,0,0,0,0,0,0,0,0,0,  1,1,0,0,	//Label - Harmonic Minor Scale and Modes
 		2,1,2,2,1,3,1,8,0,0,0,0,  0,1,0,0,	//harmonic minor
@@ -60,7 +60,7 @@ public class FormData : MonoBehaviour
 		3,1,2,1,2,2,1,8,0,0,0,0,  0,0,0,0,	//hm 6
 		1,2,1,2,2,1,3,8,0,0,0,0,  0,0,0,0,	//hm 7
 
-		0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
+		2,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
 
 		//0,8,0,0,0,0,0,0,0,0,0,0,  1,1,0,0,	//Label - Melodic Minor Scale and Modes
 		2,1,2,2,2,2,1,8,0,0,0,0,  0,1,0,0,	//melodic minor
@@ -70,6 +70,8 @@ public class FormData : MonoBehaviour
 		2,2,1,2,1,2,2,8,0,0,0,0,  0,0,0,0,	//jm 5
 		2,1,2,1,2,2,2,8,0,0,0,0,  0,0,0,0,	//jm 6
 		1,2,1,2,2,2,2,8,0,0,0,0,  0,0,0,0,	//jm 7 (altered dom)
+
+		3,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
 
 		//0,8,0,0,0,0,0,0,0,0,0,0,  1,1,0,0,	//Label - Other Scales
 		2,2,3,2,3,8,0,0,0,0,0,0,  0,1,0,0,	//maj pentonic
@@ -81,6 +83,7 @@ public class FormData : MonoBehaviour
 		2,1,2,1,2,1,2,1,8,0,0,0,  0,0,0,0,	//whole half 
 		1,3,1,2,2,1,2,8,0,0,0,0,  0,0,0,0,	//13b9 scale (29)
 
+		4,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
 
 		//0,8,0,0,0,0,0,0,0,0,0,0,  1,1,0,0,	//Label - Major Arpeggios
 		4,3,5,8,0,0,0,0,0,0,0,0,  0,1,0,0,	//maj
@@ -99,6 +102,7 @@ public class FormData : MonoBehaviour
 		4,4,3,1,8,0,0,0,0,0,0,0,  0,0,0,0,	//majmin7
 		3,4,4,1,8,0,0,0,0,0,0,0,  0,0,0,0,	//maj 7#5 (44)
 
+		5,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
 
 		//0,8,0,0,0,0,0,0,0,0,0,0,  1,1,0,0,	//Label - Minor Arpeggios
 		3,4,5,8,0,0,0,0,0,0,0,0,  0,1,0,0,	//minor
@@ -117,6 +121,8 @@ public class FormData : MonoBehaviour
 		3,2,1,4,2,8,0,0,0,0,0,0,  0,0,0,0,	//min 7b5/11
 		3,5,2,2,8,0,0,0,0,0,0,0,  0,0,0,0,	//min 7#5 (59)
 
+		6,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
+
 		//0,8,0,0,0,0,0,0,0,0,0,0,  1,1,0,0,	//Label - Dominate Arpeggios
 		4,3,3,2,8,0,0,0,0,0,0,0,  0,1,0,0,	//7
 		4,3,2,1,2,8,0,0,0,0,0,0,  0,0,0,0,	//7/6
@@ -126,7 +132,6 @@ public class FormData : MonoBehaviour
 		5,2,2,1,2,8,0,0,0,0,0,0,  0,0,0,0,	//7/6sus
 		2,2,1,2,3,2,8,0,0,0,0,0,  0,0,0,0,	//11
 		2,3,2,2,1,2,8,0,0,0,0,0,  0,0,0,0,	//13sus (67)
-
 		4,2,4,2,8,0,0,0,0,0,0,0,  0,0,0,0,	//7b5
 		4,4,2,2,8,0,0,0,0,0,0,0,  0,0,0,0,	//7#5
 		1,3,3,3,2,8,0,0,0,0,0,0,  0,0,0,0,	//7b9
@@ -137,7 +142,6 @@ public class FormData : MonoBehaviour
 		1,3,4,2,2,8,0,0,0,0,0,0,  0,0,0,0,	//7b9#5
 		3,1,2,4,2,8,0,0,0,0,0,0,  0,0,0,0,	//7#9b5
 		3,1,4,2,2,8,0,0,0,0,0,0,  0,0,0,0,	//7#9#5 (77)
-
 		1,3,3,2,1,2,8,0,0,0,0,0,  0,0,0,0,	//13b9
 		3,1,3,2,1,2,8,0,0,0,0,0,  0,0,0,0,	//13#9
 		1,3,2,3,1,2,8,0,0,0,0,0,  0,0,0,0,	//13b9b5
@@ -149,6 +153,8 @@ public class FormData : MonoBehaviour
 		4,1,2,2,1,2,8,0,0,0,0,0,  0,0,0,0,	//7/6/11
 		3,3,3,3,8,0,0,0,0,0,0,0,  0,0,0,0,	//dim7
 		4,4,4,8,0,0,0,0,0,0,0,0,  0,0,0,0,	//aug (88)
+
+		7,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
 
 		3,4,5,8,0,0,0,0,0,0,0,0,  0,0,0,0,//3 4 5  Peruvian tritonic 2 	
 		3,7,2,8,0,0,0,0,0,0,0,0,  0,0,0,0,//3 7 2  Ute tritonic
@@ -249,6 +255,8 @@ public class FormData : MonoBehaviour
 		"M.M.6",
 		"M.M.7 ",
 
+		"space",
+
 		//@"Other Scales",
 		"Major Pentonic",
 		"Minor Pentonic",
@@ -258,6 +266,8 @@ public class FormData : MonoBehaviour
 		"Half Whole",
 		"Whole Half",
 		"13b9 scale",
+
+		"space",
 
 		//@"Major Arpeggios",
 		"Maj",
@@ -276,6 +286,8 @@ public class FormData : MonoBehaviour
 		"Maj 7#5",
 		"MaMi 7",
 
+		"space",
+
 		//@"Minor Arpeggios",
 		"Min",
 		"Min 6",
@@ -292,6 +304,8 @@ public class FormData : MonoBehaviour
 		"Min 7b5",
 		"Min 7b5/11",
 		"Min 7#5",
+
+		"space",
 
 		//@"Dominate 7th Arpeggios",
 		"Dominate 7",
@@ -324,6 +338,7 @@ public class FormData : MonoBehaviour
 		"dim 7",
 		"aug",
 
+		"space",
 
 
 		//@"Exotic 3 note Scales",
