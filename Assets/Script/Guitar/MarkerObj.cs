@@ -60,11 +60,13 @@ public class MarkerObj : MonoBehaviour
 		}
 	}		
 
-	public void SetMarkerLabel(string label) 
+	public void SetMarkerLabel(string label, Color c) 
 	{
 		TextMeshPro tp = GetComponentInChildren<TextMeshPro> ();
 
 		tp.SetText (label);
+
+		tp.color = c;
 	}	
 
 	public void SetVisibleStatus(bool status)

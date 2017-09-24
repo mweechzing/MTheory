@@ -6,6 +6,7 @@ using TMPro;
 public class CurrentSelection : MonoBehaviour 
 {
 	public TMP_Text InfoPanel;
+	public TMP_Text InfoPanel2;
 
 	public static CurrentSelection Instance = null;
 
@@ -23,5 +24,6 @@ public class CurrentSelection : MonoBehaviour
 		string noteText = FormData.Instance.gKeyNamesSharp[keyIndex];
 
 		InfoPanel.SetText (noteText + " " + formText);
+		InfoPanel2.SetText (noteText + " " + formText);
 	}
 }

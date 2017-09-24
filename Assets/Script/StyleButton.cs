@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class KeyButton : MonoBehaviour 
+public class StyleButton : MonoBehaviour 
 {
-	public int KeyIndex = 0;
+	public int StyleIndex = 0;
 
 	void Start () 
 	{
-		string formText = FormData.Instance.gKeyNames1 [KeyIndex];
+		string styleText = FormData.Instance.gNoteGraphicStyleText [StyleIndex];
 
 		Text[] buttonText = GetComponentsInChildren <Text> ();
 
-		buttonText[0].text = formText;
+		buttonText[0].text = styleText;
 	}
 
 	void Update () 
@@ -24,8 +24,7 @@ public class KeyButton : MonoBehaviour
 	public void ButtonSelected()
 	{
 		//Debug.LogError ("Send Message form index = " + KeyIndex);
-		NeckDraw.Instance.SetCurrentKey (KeyIndex);
+		NeckDraw.Instance.SetCurrentStyleIndex (StyleIndex);
 	}
 }
-
 

@@ -502,6 +502,16 @@ public class FormData : MonoBehaviour
 		"9th",
 	};
 
+	[HideInInspector]
+	public string[] gNoteGraphicStyleText = new string[]
+	{
+		"A",
+		"B",
+		"C",
+		"D",
+		"E",
+		"F",
+	};
 
 	public string GetFormNameAtIndex(int index)
 	{

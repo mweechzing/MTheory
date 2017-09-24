@@ -32,6 +32,8 @@ public class ColorSet
 	private Color mColor11 = Color.white;
 	[SerializeField]
 	private Color mColor12 = Color.white;
+	[SerializeField]
+	private Color mColorText = Color.white;
 
 
 
@@ -105,6 +107,13 @@ public class ColorSet
 	{
 		get { return mColor12; }
 		set { mColor12 = value; }
+	}
+
+
+	public Color ColorText
+	{
+		get { return mColorText; }
+		set { mColorText = value; }
 	}
 
 }

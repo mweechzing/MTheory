@@ -73,11 +73,13 @@ public class NeckDraw : MonoBehaviour
 		#endif
 		*/
 
-		int key, form;
-		SaveState.Instance.ReadFormState(out key, out form);
+		int key, form, style, display;
+		SaveState.Instance.ReadFormState(out key, out form, out style, out display);
 		//Debug.LogError(key.ToString() + " " + form.ToString());
 		CurrentKey = key;
 		CurrentFormIndex = form;
+		CurrentStyle = style;
+		NoteDisplayStyle = display;
 
 		MarkerObjectContainer = GameObject.Find ("MarkerObjectContainer");
 		FretPanelObjectContainer = GameObject.Find ("FretPanelObjectContainer");
@@ -93,7 +95,7 @@ public class NeckDraw : MonoBehaviour
 
 		GuitarNeck.Instance.InitGuitarNeck ();
 		GuitarNeck.Instance.Clear ();
-		GuitarNeck.Instance.ApplyForm (CurrentKey, 0, 0);
+		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
 
 
 		QuerySetFretPanelObjectsPosition ();
@@ -138,8 +140,7 @@ public class NeckDraw : MonoBehaviour
 		ApplyForm ();
 
 		CurrentSelection.Instance.RefreshSelectedForm ();
-
-		SaveState.Instance.WriteFormState(CurrentKey, CurrentFormIndex);
+		SaveState.Instance.WriteFormState(CurrentKey, CurrentFormIndex, CurrentStyle, NoteDisplayStyle);
 	}
 
 	public void SetNoteDisplayStyle(int displayStyle)
@@ -151,8 +152,12 @@ public class NeckDraw : MonoBehaviour
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
+
+		SaveState.Instance.WriteFormState(CurrentKey, CurrentFormIndex, CurrentStyle, NoteDisplayStyle);
 	}
 
+
+	//KEY
 	public void SetCurrentKey(int key)
 	{
 		CurrentKey = key;
@@ -163,14 +168,16 @@ public class NeckDraw : MonoBehaviour
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
 
-		SaveState.Instance.WriteFormState(CurrentKey, CurrentFormIndex);
-
+		CurrentSelection.Instance.RefreshSelectedForm ();
+		SaveState.Instance.WriteFormState(CurrentKey, CurrentFormIndex, CurrentStyle, NoteDisplayStyle);
 	}
 
 	public int GetCurrentKey()
 	{
 		return CurrentKey;
 	}
+
+	//FORM
 	public void SetCurrentFormIndex(int formIndex)
 	{
 		CurrentFormIndex = formIndex;
@@ -183,13 +190,34 @@ public class NeckDraw : MonoBehaviour
 
 
 		CurrentSelection.Instance.RefreshSelectedForm ();
-
-		SaveState.Instance.WriteFormState(CurrentKey, CurrentFormIndex);
+		SaveState.Instance.WriteFormState(CurrentKey, CurrentFormIndex, CurrentStyle, NoteDisplayStyle);
 
 	}
 	public int GetCurrentFormIndex()
 	{
 		return CurrentFormIndex;
+	}
+
+
+	//STYLE
+	public void SetCurrentStyleIndex(int styleIndex)
+	{
+		CurrentStyle = styleIndex;
+
+		GuitarNeck.Instance.Clear ();
+		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
+
+		QuerySetObjectsResetColor ();
+		ApplyForm ();
+
+
+		CurrentSelection.Instance.RefreshSelectedForm ();
+		SaveState.Instance.WriteFormState(CurrentKey, CurrentFormIndex, CurrentStyle, NoteDisplayStyle);
+
+	}
+	public int GetCurrenStyle()
+	{
+		return CurrentStyle;
 	}
 
 
@@ -400,7 +428,8 @@ public class NeckDraw : MonoBehaviour
 					noteText = FormData.Instance.gIntervalExtendedText[interval];
 				}
 					
-				objectScript.SetMarkerLabel (noteText);
+				c = GetColorFromSet(cs, 12);
+				objectScript.SetMarkerLabel (noteText, c);
 			}
 		}
 	}
@@ -457,6 +486,9 @@ public class NeckDraw : MonoBehaviour
 			break;
 		case 11:
 			rc = cs.Color12;
+			break;
+		case 12:
+			rc = cs.ColorText;
 			break;
 		}
 			
