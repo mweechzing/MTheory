@@ -36,6 +36,12 @@ public class ColorSet
 	private Color mColorText = Color.white;
 
 
+	[SerializeField]
+	private int[] mColorCodes; 
+	public int GetColorCode(int index)
+	{
+		return( mColorCodes[index] );
+	}
 
 	public Color Color1
 	{

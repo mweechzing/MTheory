@@ -16,6 +16,8 @@ public class MarkerObj : MonoBehaviour
 
 
 	public GameObject backingSprite;
+	public GameObject secondarySprite;
+	public GameObject tertiarySprite;
 	public GameObject textObj;
 
 
@@ -24,11 +26,7 @@ public class MarkerObj : MonoBehaviour
 		get {return _id; } 
 		set {_id = value; }
 	}
-
-
-
-
-
+		
 	private int _noteName = 0;
 	public int NoteName {
 		get {return _noteName; } 
@@ -41,6 +39,13 @@ public class MarkerObj : MonoBehaviour
 		set {_markedColor = value; }
 	}
 
+	private int _useSecondary = 0;
+	public int UseSecondary {
+		get {return _useSecondary; } 
+		set {_useSecondary = value; }
+	}
+
+
 	void Start () 
 	{}
 
@@ -48,6 +53,24 @@ public class MarkerObj : MonoBehaviour
 	{
 		transform.position = new Vector3(vec.x, vec.y, vec.z);
 	}
+
+	public void SetSpriteToUse(int s)
+	{
+		if(s == 0) {
+			backingSprite.SetActive(true);
+			secondarySprite.SetActive(false);
+			tertiarySprite.SetActive(false);
+		}else if(s == 1) {
+			backingSprite.SetActive(false);
+			secondarySprite.SetActive(true);
+			tertiarySprite.SetActive(false);
+		}else{
+			backingSprite.SetActive(false);
+			secondarySprite.SetActive(false);
+			tertiarySprite.SetActive(true);
+		}
+	}
+
 
 	void Update () 
 	{
@@ -57,6 +80,8 @@ public class MarkerObj : MonoBehaviour
 	{
 		if (backingSprite != null) {
 			backingSprite.GetComponent<Renderer> ().material.color = new Color32 ((byte)red, (byte)green, (byte)blue, (byte)alpha);
+			secondarySprite.GetComponent<Renderer> ().material.color = new Color32 ((byte)red, (byte)green, (byte)blue, (byte)alpha);
+			tertiarySprite.GetComponent<Renderer> ().material.color = new Color32 ((byte)red, (byte)green, (byte)blue, (byte)alpha);
 		}
 	}		
 

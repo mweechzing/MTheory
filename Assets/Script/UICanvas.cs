@@ -15,6 +15,8 @@ public class UICanvas : MonoBehaviour
 	
 	public void ToggleMainPanel () 
 	{
+		AudioController.Instance.PlayButtonClick(1);
+
 		if (OnOff == true) {
 			MainPanel.gameObject.SetActive (false);
 			OnOff = false;

@@ -417,6 +417,18 @@ public class NeckDraw : MonoBehaviour
 				ColorSet cs = NeckNoteColors[CurrentStyle];
 				Color c = GetColorFromSet(cs, interval);
 				objectScript.SetObjectColor (c.r*255f, c.g*255f, c.b*255f, c.a*255f);
+				objectScript.SetSpriteToUse(0);
+
+				int colorCode = cs.GetColorCode(0);
+				if(colorCode == 1) {
+					if(interval == 0) {
+						objectScript.SetSpriteToUse(1);
+					} else if(interval == 7){
+						objectScript.SetSpriteToUse(2);
+					}else {
+						objectScript.SetSpriteToUse(0);
+					}
+				}
 
 				//select note display style
 				string noteText = FormData.Instance.gKeyNamesSharp[noteIndex];

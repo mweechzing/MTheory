@@ -23,6 +23,8 @@ public class KeyButton : MonoBehaviour
 
 	public void ButtonSelected()
 	{
+		AudioController.Instance.PlayButtonClick(0);
+
 		//Debug.LogError ("Send Message form index = " + KeyIndex);
 		NeckDraw.Instance.SetCurrentKey (KeyIndex);
 	}
