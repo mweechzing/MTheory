@@ -36,10 +36,13 @@ public class FretPanelObj : MonoBehaviour
 		}
 	}		
 
-	public void SetFretLabel(string label) 
+	public void SetFretLabel(string label, int size = 0) 
 	{
 		TextMeshPro tp = GetComponentInChildren<TextMeshPro> ();
 
+		if(size > 0) {
+			tp.fontSize = size;
+		}
 		tp.SetText (label);
 	}	
 

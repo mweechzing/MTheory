@@ -23,6 +23,10 @@ public class NeckDraw : MonoBehaviour
 	public List <GameObject> FretPanelObjectList = null;
 	private GameObject FretPanelObjectContainer;
 
+	public ColorSet[] NeckNoteColors;
+	public ColorSet[] NeckFretColors;
+
+
 
 	private float targetScale = 1.0f;
 	private float sizeScale = 0.5f;
@@ -33,8 +37,11 @@ public class NeckDraw : MonoBehaviour
 	private int NoteDisplayStyle = 0;
 	private int CurrentFormIndex = 0;
 	private int CurrentKey = 0;
+	private int CurrentStyle = 0;
 
 	private float gridStartX, gridStartY;
+
+	private bool firstPass = true;
 
 	public static NeckDraw Instance;
 
@@ -49,7 +56,7 @@ public class NeckDraw : MonoBehaviour
 
 	void Start () 
 	{
-		#if !UNITY_EDITOR
+		/*
 		Resolution screenRes = Screen.currentResolution;
 		float screenWidth = screenRes.width;
 
@@ -64,7 +71,13 @@ public class NeckDraw : MonoBehaviour
 
 		gameObject.transform.localScale = new Vector2 (targetScale, targetScale);
 		#endif
+		*/
 
+		int key, form;
+		SaveState.Instance.ReadFormState(out key, out form);
+		//Debug.LogError(key.ToString() + " " + form.ToString());
+		CurrentKey = key;
+		CurrentFormIndex = form;
 
 		MarkerObjectContainer = GameObject.Find ("MarkerObjectContainer");
 		FretPanelObjectContainer = GameObject.Find ("FretPanelObjectContainer");
@@ -88,8 +101,19 @@ public class NeckDraw : MonoBehaviour
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
+
 	}
-	
+
+	void Update () 
+	{
+		if(firstPass == true) {
+			if(CurrentSelection.Instance != null) {
+				CurrentSelection.Instance.RefreshSelectedForm ();
+				firstPass = false;
+			}
+		}
+	}
+
 	public void ToggleNeckScale () 
 	{
 		if (sizeScale == 0.5f) {
@@ -112,6 +136,10 @@ public class NeckDraw : MonoBehaviour
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
+
+		CurrentSelection.Instance.RefreshSelectedForm ();
+
+		SaveState.Instance.WriteFormState(CurrentKey, CurrentFormIndex);
 	}
 
 	public void SetNoteDisplayStyle(int displayStyle)
@@ -134,11 +162,34 @@ public class NeckDraw : MonoBehaviour
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
+
+		SaveState.Instance.WriteFormState(CurrentKey, CurrentFormIndex);
+
 	}
 
 	public int GetCurrentKey()
 	{
 		return CurrentKey;
+	}
+	public void SetCurrentFormIndex(int formIndex)
+	{
+		CurrentFormIndex = formIndex;
+
+		GuitarNeck.Instance.Clear ();
+		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
+
+		QuerySetObjectsResetColor ();
+		ApplyForm ();
+
+
+		CurrentSelection.Instance.RefreshSelectedForm ();
+
+		SaveState.Instance.WriteFormState(CurrentKey, CurrentFormIndex);
+
+	}
+	public int GetCurrentFormIndex()
+	{
+		return CurrentFormIndex;
 	}
 
 
@@ -220,7 +271,7 @@ public class NeckDraw : MonoBehaviour
 
 	void QuerySetFretPanelObjectsPosition() 
 	{
-		float xOffset = 2.15f;
+		float xOffset = 2.13f;
 		float yOffset = 0f;
 		int fretIndex = 0;
 		int[] fretArray = new int[24] { 0,-1,-1,3,-1,5,-1,7,-1,9,-1,-1,12,-1,-1,15,-1,17,-1,19,-1,21,-1,23};
@@ -236,13 +287,17 @@ public class NeckDraw : MonoBehaviour
 
 			int f = fretArray [fretIndex];
 			if (f > -1) {
-				objectScript.SetFretLabel (f.ToString ());
+				if(f == 0) {
+					objectScript.SetFretLabel ("Open", 3);
+				} else {
+					objectScript.SetFretLabel (f.ToString ());
+				}
 			} else {
 				objectScript.SetFretLabel (" ");			
 			}
 
 			if (fretIndex == 0) {
-				objectScript.SetObjectColor (255, 128, 0, 128);
+				objectScript.SetObjectColor (32, 64, 128, 255);
 			}
 
 			yOffset += FretGridDY;
@@ -288,7 +343,6 @@ public class NeckDraw : MonoBehaviour
 				if (noteIndex >= 12) {
 					noteIndex = 0;
 				}
-			
 			}
 
 			if(colCount >= FretGridWidth) {
@@ -309,7 +363,6 @@ public class NeckDraw : MonoBehaviour
 			//Debug.LogError ("ApplyForm note = " + note);
 
 			int interval = GuitarNeck.Instance.GetInterval (0, f);
-
 			if (GuitarNeck.Instance.GetNoteStatus (0, f) > 0) {
 					
 				QueryApplyNoteToOn (note, interval);
@@ -320,7 +373,7 @@ public class NeckDraw : MonoBehaviour
 
 	void QueryApplyNoteToOn(int note, int interval)
 	{
-		Debug.LogError ("QueryApplyNoteToOn note = " + note);
+		//Debug.LogError ("QueryApplyNoteToOn note = " + note);
 
 		foreach (GameObject tObj in MarkerObjectList) {
 			
@@ -333,8 +386,9 @@ public class NeckDraw : MonoBehaviour
 				objectScript.SetVisibleStatus (true);
 
 				//select color styles
-				objectScript.SetObjectColor (0, 128, 255, 255);
-
+				ColorSet cs = NeckNoteColors[CurrentStyle];
+				Color c = GetColorFromSet(cs, interval);
+				objectScript.SetObjectColor (c.r*255f, c.g*255f, c.b*255f, c.a*255f);
 
 				//select note display style
 				string noteText = FormData.Instance.gKeyNamesSharp[noteIndex];
@@ -348,7 +402,6 @@ public class NeckDraw : MonoBehaviour
 					
 				objectScript.SetMarkerLabel (noteText);
 			}
-
 		}
 	}
 
@@ -361,6 +414,53 @@ public class NeckDraw : MonoBehaviour
 			objectScript.SetVisibleStatus (false);
 			objectScript.SetObjectColor (255, 255, 255, 0);
 		}
+	}
+
+
+	private Color GetColorFromSet(ColorSet cs, int index)
+	{
+		Color rc = cs.Color1;
+		switch(index)
+		{
+		case 0:
+			rc = cs.Color1;
+			break;
+		case 1:
+			rc = cs.Color2;
+			break;
+		case 2:
+			rc = cs.Color3;
+			break;
+		case 3:
+			rc = cs.Color4;
+			break;
+		case 44:
+			rc = cs.Color5;
+			break;
+		case 5:
+			rc = cs.Color6;
+			break;
+		case 6:
+			rc = cs.Color7;
+			break;
+		case 7:
+			rc = cs.Color8;
+			break;
+		case 8:
+			rc = cs.Color9;
+			break;
+		case 9:
+			rc = cs.Color10;
+			break;
+		case 10:
+			rc = cs.Color11;
+			break;
+		case 11:
+			rc = cs.Color12;
+			break;
+		}
+			
+		return rc;
 	}
 
 

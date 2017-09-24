@@ -23,10 +23,7 @@ public class ButtonNoteDisplay : MonoBehaviour
 
 	public void ButtonSelected()
 	{
-
-		Debug.LogError ("Send Message form index = " + NoteDisplayIndex);
-
-
+		//Debug.LogError ("Send Message form index = " + NoteDisplayIndex);
 		NeckDraw.Instance.SetNoteDisplayStyle (NoteDisplayIndex);
 	}
 }

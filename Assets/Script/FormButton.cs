@@ -35,10 +35,7 @@ public class FormButton : MonoBehaviour
 
 	public void ButtonSelected()
 	{
-
-		Debug.LogError ("Send Message form index = " + _formIndex);
-
-
-		FormGridList.Instance.SetSelectedFormIndex (_formIndex);
+		//Debug.LogError ("Send Message form index = " + _formIndex);
+		NeckDraw.Instance.SetCurrentFormIndex(FormIndex);
 	}
 }

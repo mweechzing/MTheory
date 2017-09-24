@@ -9,7 +9,6 @@ public class FormGridList : MonoBehaviour
 	public GameObject GridLayout;
 
 	public GameObject GoButton;
-	public TMP_Text InfoPanel;
 
 	private int _selectedformIndex = 0;
 	public int SelectedFormIndex {
@@ -17,7 +16,7 @@ public class FormGridList : MonoBehaviour
 		set {_selectedformIndex = value; }
 	}
 
-	public static FormGridList Instance;
+	public static FormGridList Instance = null;
 
 	void Awake () 
 	{
@@ -68,48 +67,23 @@ public class FormGridList : MonoBehaviour
 		foreach(Button bObj in glgButtons)
 		{
 			FormButton objectScript = bObj.GetComponent<FormButton> ();
-
 			objectScript.FormIndex = findex;
-
 			objectScript.Refresh ();
-
 			findex++;
 		}
-
 	}
 		
-
-	public void SetSelectedFormIndex(int fIndex)
-	{
-		_selectedformIndex = fIndex;
-
-		string formText = FormData.Instance.gFormText [fIndex];
-
-		int keyIndex = NeckDraw.Instance.GetCurrentKey ();
-
-		string noteText = FormData.Instance.gKeyNamesSharp[keyIndex];
-
-
-		InfoPanel.SetText (noteText + " " + formText);
-	}
-
 	public void ButtonGO()
 	{
-
-		Debug.LogError ("Send Message form index = " + _selectedformIndex);
-
-		NeckDraw.Instance.ReApplyForm (_selectedformIndex);
-
+		//Debug.LogError ("Send Message form index = " + _selectedformIndex);
+		//NeckDraw.Instance.ReApplyForm (_selectedformIndex);
 		gameObject.SetActive (false);
-
 		TapPad.Instance.DragEnabled = true;
-
 	}
 
 	public void ButtonShowSelf()
 	{
 		TapPad.Instance.DragEnabled = false;
-
 		gameObject.SetActive (true);
 	}
 

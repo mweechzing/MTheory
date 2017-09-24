@@ -23,11 +23,9 @@ public class KeyButton : MonoBehaviour
 
 	public void ButtonSelected()
 	{
-
-		Debug.LogError ("Send Message form index = " + KeyIndex);
-
-
+		//Debug.LogError ("Send Message form index = " + KeyIndex);
 		NeckDraw.Instance.SetCurrentKey (KeyIndex);
+		CurrentSelection.Instance.RefreshSelectedForm();
 	}
 }
 
