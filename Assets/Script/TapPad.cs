@@ -26,6 +26,12 @@ public class TapPad : MonoBehaviour
 	void Start () 
 	{
 		camDefault = Camera.main.transform.position;
+
+
+		float targetScale = NeckDraw.Instance.GetTargetScale();
+
+		//camMaxY *= targetScale;
+
 	}
 	
 	void Update () 

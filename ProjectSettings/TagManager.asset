@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: FretBack
+    uniqueID: 1241606331
+    locked: 0
+  - name: FretStrings
+    uniqueID: 2673040845
+    locked: 0
+  - name: Marker
+    uniqueID: 3804054355
+    locked: 0
+  - name: MarkerText
+    uniqueID: 3925067355
+    locked: 0

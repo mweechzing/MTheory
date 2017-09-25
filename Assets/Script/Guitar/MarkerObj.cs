@@ -89,6 +89,9 @@ public class MarkerObj : MonoBehaviour
 	{
 		TextMeshPro tp = GetComponentInChildren<TextMeshPro> ();
 
+		tp.sortingLayerID = SortingLayer.NameToID ("MarkerText");
+		tp.sortingOrder = 0;
+	
 		tp.SetText (label);
 
 		tp.color = c;

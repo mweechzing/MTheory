@@ -22534,7 +22534,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1263182926}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.02, y: 2.3, z: 0}
+  m_LocalPosition: {x: -3, y: 2.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 445919453}
@@ -25082,11 +25082,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 33590975369358118, guid: f22331bb64c65424a99b73bfac0032cc,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 114986339315966282, guid: f22331bb64c65424a99b73bfac0032cc,
         type: 2}
       propertyPath: m_havePropertiesChanged
@@ -25096,6 +25091,28 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33590975369358118, guid: f22331bb64c65424a99b73bfac0032cc,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4608812755891852, guid: f22331bb64c65424a99b73bfac0032cc, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734937344369068, guid: f22331bb64c65424a99b73bfac0032cc, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821153825234310, guid: f22331bb64c65424a99b73bfac0032cc, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224132295073550394, guid: f22331bb64c65424a99b73bfac0032cc,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f22331bb64c65424a99b73bfac0032cc, type: 2}
@@ -30001,6 +30018,7 @@ MonoBehaviour:
   FretGridDY: -0.85
   StoragePosition: {fileID: 1070159329}
   StartGridPosition: {fileID: 1263182926}
+  TapPad: {fileID: 1667275511}
   MarkerObjectList: []
   FretPanelObjectList: []
   NeckNoteColors:
@@ -30264,8 +30282,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1667275511}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.114, y: -7.502, z: 0}
-  m_LocalScale: {x: 8.02397, y: 31.737556, z: 1}
+  m_LocalPosition: {x: 0.37, y: -8, z: 0}
+  m_LocalScale: {x: 8, y: 31.737556, z: 1}
   m_Children: []
   m_Father: {fileID: 1634250052}
   m_RootOrder: 0
@@ -37313,7 +37331,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4f82c6f26d9ee4cd69a1a751e55773cc, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e57bcf815b18547a7a8b44a99e4d9c99, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

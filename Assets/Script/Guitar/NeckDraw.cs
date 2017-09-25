@@ -13,6 +13,7 @@ public class NeckDraw : MonoBehaviour
 
 	public GameObject StoragePosition;
 	public GameObject StartGridPosition;
+	public GameObject TapPad;
 
 	[HideInInspector]
 	public List <GameObject> MarkerObjectList = null;
@@ -30,6 +31,7 @@ public class NeckDraw : MonoBehaviour
 
 	private float targetScale = 1.0f;
 	private float sizeScale = 0.5f;
+	private float scalePosY = 1f;
 
 
 	private const float TargetScreenWidth = 1536.0f;//standard retina
@@ -39,12 +41,21 @@ public class NeckDraw : MonoBehaviour
 	private int CurrentKey = 0;
 	private int CurrentStyle = 0;
 
+	private float fretStartX, fretStartY;
 	private float gridStartX, gridStartY;
 
 	private bool firstPass = true;
 
 	public static NeckDraw Instance;
 
+	public float GetTargetScale () 
+	{
+		return targetScale;
+	}
+	public float GetPosYScale () 
+	{
+		return scalePosY;
+	}
 
 	void Awake () 
 	{
@@ -52,27 +63,52 @@ public class NeckDraw : MonoBehaviour
 
 		MarkerObjectList = new List<GameObject>();
 		FretPanelObjectList = new List<GameObject>();
+
+
+		Resolution screenRes = Screen.currentResolution;
+
+		float targetaspect = 1536.0f / 2048.0f;
+
+		float windowaspect = 1536f / 2048f;//debug
+		//float windowaspect = 750f / 1334f;//debug
+		//float windowaspect = 640f / 960f;//debug
+		//float windowaspect = screenRes.width / screenRes.height;
+		float scaleheight = windowaspect / targetaspect;
+		targetScale = scaleheight; 
+
+		scalePosY = 640f / 2048.0f;
+
+		Debug.LogError("targetScale = " + targetScale + "  screen : " + Screen.currentResolution);
+
+
+		Vector3 vScale = TapPad.transform.localScale;
+		TapPad.transform.localScale = new Vector3(vScale.x * targetScale, vScale.y * targetScale, 1f);
+
+		Vector3 vPosition = TapPad.transform.position;
+		TapPad.transform.position = new Vector3(vPosition.x * targetScale, vPosition.y * targetScale, 1f);
+
+		vPosition = TapPad.transform.position;
+
+		gridStartX = TapPad.transform.position.x;
+		gridStartY = TapPad.transform.position.y;
+
+		fretStartX = gridStartX;
+		fretStartY = gridStartY;
+
+
+		vScale = TapPad.transform.localScale;
+
+		gridStartX -= vScale.x * 0.32f;
+		gridStartY += vScale.y * 0.32f;
+
+		fretStartX = vPosition.x;
+		fretStartY += vScale.y * 0.32f;
+
 	}
 
 	void Start () 
 	{
-		/*
-		Resolution screenRes = Screen.currentResolution;
-		float screenWidth = screenRes.width;
-
-		targetScale = TargetScreenWidth;
-
-		Debug.LogError(Screen.currentResolution);
-
-		if (screenWidth < TargetScreenWidth) {
 		
-			targetScale *= (screenWidth / TargetScreenWidth); 
-		}
-
-		gameObject.transform.localScale = new Vector2 (targetScale, targetScale);
-		#endif
-		*/
-
 		int key, form, style, display;
 		SaveState.Instance.ReadFormState(out key, out form, out style, out display);
 		//Debug.LogError(key.ToString() + " " + form.ToString());
@@ -83,9 +119,6 @@ public class NeckDraw : MonoBehaviour
 
 		MarkerObjectContainer = GameObject.Find ("MarkerObjectContainer");
 		FretPanelObjectContainer = GameObject.Find ("FretPanelObjectContainer");
-
-		gridStartX = StartGridPosition.transform.position.x;
-		gridStartY = StartGridPosition.transform.position.y;
 
 		LoadFretPanelObjects ();
 		QuerySetFretPanelObjectsLoaded ();
@@ -236,7 +269,7 @@ public class NeckDraw : MonoBehaviour
 
 				//default storage location
 				_sfObj.transform.position = new Vector2 (StoragePosition.transform.position.x, StoragePosition.transform.position.y);
-				_sfObj.transform.localScale = new Vector2 (StoragePosition.transform.localScale.x, StoragePosition.transform.localScale.y);
+				_sfObj.transform.localScale = new Vector2 (targetScale, targetScale);
 
 				MarkerObj objectScript = _sfObj.GetComponent<MarkerObj> ();
 				objectScript.ID = t;
@@ -265,6 +298,7 @@ public class NeckDraw : MonoBehaviour
 
 				//default storage location
 				_sfObj.transform.position = new Vector2 (StoragePosition.transform.position.x, StoragePosition.transform.position.y);
+				_sfObj.transform.localScale = new Vector2 (targetScale, targetScale);
 
 				FretPanelObj objectScript = _sfObj.GetComponent<FretPanelObj> ();
 				objectScript.ID = t;
@@ -299,19 +333,19 @@ public class NeckDraw : MonoBehaviour
 
 	void QuerySetFretPanelObjectsPosition() 
 	{
-		float xOffset = 2.13f;
 		float yOffset = 0f;
 		int fretIndex = 0;
 		int[] fretArray = new int[24] { 0,-1,-1,3,-1,5,-1,7,-1,9,-1,-1,12,-1,-1,15,-1,17,-1,19,-1,21,-1,23};
+
 
 		foreach(GameObject tObj in FretPanelObjectList)
 		{
 			FretPanelObj objectScript = tObj.GetComponent<FretPanelObj> ();
 
-			float x = gridStartX + xOffset;
-			float y = gridStartY + yOffset;
+			float x = fretStartX;
+			float y = fretStartY + yOffset;
+			objectScript.SetGridPosition (new Vector3(x, y, 1f));
 
-			objectScript.SetGridPosition (new Vector3(x,y,-0.3f));
 
 			int f = fretArray [fretIndex];
 			if (f > -1) {
@@ -328,7 +362,7 @@ public class NeckDraw : MonoBehaviour
 				objectScript.SetObjectColor (32, 64, 128, 255);
 			}
 
-			yOffset += FretGridDY;
+			yOffset += FretGridDY * targetScale;
 
 			fretIndex++;
 		}
@@ -336,7 +370,7 @@ public class NeckDraw : MonoBehaviour
 
 	void QuerySetMarkerObjectsPosition() 
 	{
-		float xOffset = 0f;
+		float xOffset = 0.42f * targetScale;
 		float yOffset = 0f;
 		int colCount = 0;
 		int rowCount = 0;
@@ -355,12 +389,12 @@ public class NeckDraw : MonoBehaviour
 			objectScript.SetGridPosition (new Vector3(x,y,-0.5f));
 			objectScript.NoteName = noteIndex;
 
-			yOffset += FretGridDY;
+			yOffset += FretGridDY * targetScale;
 			rowCount++;
 			if (rowCount >= FretGridHeight) {
 				rowCount = 0;
 				yOffset = 0f;
-				xOffset += FretGridDX;
+				xOffset += FretGridDX * targetScale;
 				colCount++;
 
 				noteIndex = notes [colCount];
