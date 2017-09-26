@@ -9,7 +9,7 @@ using UnityEngine;
 //iPhone 8 		: 750 x 1334
 //iPhone 8+ 	: 1242 x 2208
 //iPhone X 		: 1125 x 2436
-//iPhone Mini 	: 1536 x 2048
+//iPhone 4/Mini : 1536 x 2048
 //iPhone pro10 	: 1668 x 2224
 //iPhone pro12 	: 2048 x 2732
 
@@ -33,8 +33,8 @@ public class ResolutionManager : MonoBehaviour
 		float h = screenRes.height;
 
 		//debug
-		w = 750;
-		h = 1334;
+		w = 1668;
+		h = 2224;
 
 
 		float targetaspect = 1536.0f / 2048.0f;

@@ -28,7 +28,7 @@ public class TapPad : MonoBehaviour
 		camDefault = Camera.main.transform.position;
 
 
-		float targetScale = ResolutionManager.Instance.GetTargetScale();
+		//float targetScale = ResolutionManager.Instance.GetTargetScale();
 
 		camMaxY  = ResolutionManager.Instance.GetCamLimY();
 
