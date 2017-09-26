@@ -28,7 +28,7 @@ public class FormButton : MonoBehaviour
 		string formText = FormData.Instance.gFormText [FormIndex];
 
 		int len = formText.Length;
-		Debug.LogError("formText = " + formText + "  len = " + len + " FormIndex = " + FormIndex);
+		//Debug.LogError("formText = " + formText + "  len = " + len + " FormIndex = " + FormIndex);
 		Text[] buttonText = GetComponentsInChildren <Text> ();
 		buttonText[0].text = formText;
 

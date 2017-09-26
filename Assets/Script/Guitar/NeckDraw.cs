@@ -45,6 +45,11 @@ public class NeckDraw : MonoBehaviour
 
 	private bool firstPass = true;
 
+	//note animation
+	private bool AnimateNeck = false;
+
+	float elaspedTime = 0f;
+	float waitTime = 2f;
 
 
 	public static NeckDraw Instance;
@@ -113,6 +118,7 @@ public class NeckDraw : MonoBehaviour
 		GuitarNeck.Instance.InitGuitarNeck ();
 		GuitarNeck.Instance.Clear ();
 		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
+		AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
 
 
 		QuerySetFretPanelObjectsPosition ();
@@ -129,6 +135,18 @@ public class NeckDraw : MonoBehaviour
 			if(CurrentSelection.Instance != null) {
 				CurrentSelection.Instance.RefreshSelectedForm ();
 				firstPass = false;
+			}
+		}
+
+		if (AnimateNeck == true) {
+
+			float delta = Time.deltaTime;
+			elaspedTime += delta;
+			if (elaspedTime > waitTime) {
+
+				ApplyNoteAnim ();
+
+				AnimateNeck = false;
 			}
 		}
 	}
@@ -152,6 +170,7 @@ public class NeckDraw : MonoBehaviour
 		CurrentFormIndex = formIndex;
 		GuitarNeck.Instance.Clear ();
 		GuitarNeck.Instance.ApplyForm (CurrentKey, formIndex, 0);
+		AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
@@ -166,6 +185,7 @@ public class NeckDraw : MonoBehaviour
 
 		GuitarNeck.Instance.Clear ();
 		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
+		AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
@@ -181,6 +201,7 @@ public class NeckDraw : MonoBehaviour
 
 		GuitarNeck.Instance.Clear ();
 		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
+		AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
@@ -201,6 +222,7 @@ public class NeckDraw : MonoBehaviour
 
 		GuitarNeck.Instance.Clear ();
 		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
+		AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
@@ -223,6 +245,7 @@ public class NeckDraw : MonoBehaviour
 
 		GuitarNeck.Instance.Clear ();
 		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
+		AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
@@ -527,5 +550,36 @@ public class NeckDraw : MonoBehaviour
 
 
 
+
+	void ApplyNoteAnim() 
+	{
+		for (int f = 0; f < Globals.OctaveLen; f++) {
+
+			int note = GuitarNeck.Instance.GetNote (0, f);
+
+			if (GuitarNeck.Instance.GetNoteStatus (0, f) > 0) {
+
+				QueryApplyNoteAnimation (note);
+			}
+		}
+	}
+
+	void QueryApplyNoteAnimation(int note)
+	{
+		//Debug.LogError ("QueryApplyNoteToOn note = " + note);
+
+		foreach (GameObject tObj in MarkerObjectList) {
+
+			MarkerObj objectScript = tObj.GetComponent<MarkerObj> ();
+
+			int noteIndex = objectScript.NoteName;
+
+			if (noteIndex == note) {
+
+				objectScript.StartColorAnim (Color.white, 0.25f);
+
+			}
+		}
+	}
 
 }

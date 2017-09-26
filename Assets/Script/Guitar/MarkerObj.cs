@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Core.PathCore;
+using DG.Tweening.Plugins.Options;
 
 public class MarkerObj : MonoBehaviour 
 {
@@ -45,6 +49,7 @@ public class MarkerObj : MonoBehaviour
 		set {_useSecondary = value; }
 	}
 
+	private Sequence AnimSequence = null;
 
 	void Start () 
 	{}
@@ -100,6 +105,42 @@ public class MarkerObj : MonoBehaviour
 	public void SetVisibleStatus(bool status)
 	{
 		gameObject.SetActive (status);
+	}
+
+
+
+	public void StartColorAnim (Color newColor, float speed) 
+	{
+		//slowest----- each of these has an Out as well.
+		//InSine
+		//InQuad
+		//InCubic
+		//InQuint
+		//InExpo
+		//fastest-----
+
+		Debug.LogError ("StartColorAnim note = " + NoteName);
+
+
+		Color orgColor = backingSprite.GetComponent<Renderer> ().material.color;
+
+		AnimSequence = DOTween.Sequence ().SetEase (Ease.Linear);
+
+		Material m = backingSprite.GetComponent<Renderer> ().material;
+
+		AnimSequence.Append(m.DOColor (newColor, speed));
+		//AnimSequence.Join(transform.DOScale(new Vector3(2f, 2f, 1f), speed));
+
+		AnimSequence.Append(m.DOColor (orgColor, speed).OnComplete(ColorSequenceComplete));
+		//AnimSequence.Join(transform.DOScale(new Vector3(2f, 2f, 1f), speed));
+	}
+
+	void ColorSequenceComplete () 
+	{
+		//wait = 0;
+		//transform.position = new Vector3 (sx, sy, sz);
+		//StartAnim (sx, sy - 7f, sz, 0.25f);
+		//AnimState = eAnimState.Ready;
 	}
 		
 

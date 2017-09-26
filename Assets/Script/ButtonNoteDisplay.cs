@@ -23,6 +23,8 @@ public class ButtonNoteDisplay : MonoBehaviour
 
 	public void ButtonSelected()
 	{
+		AudioController.Instance.PlayButtonClick(0);
+
 		//Debug.LogError ("Send Message form index = " + NoteDisplayIndex);
 		NeckDraw.Instance.SetNoteDisplayStyle (NoteDisplayIndex);
 	}
