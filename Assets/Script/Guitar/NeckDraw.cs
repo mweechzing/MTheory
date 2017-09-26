@@ -31,7 +31,6 @@ public class NeckDraw : MonoBehaviour
 
 	private float targetScale = 1.0f;
 	private float sizeScale = 0.5f;
-	private float scalePosY = 1f;
 
 
 	private const float TargetScreenWidth = 1536.0f;//standard retina
@@ -46,16 +45,9 @@ public class NeckDraw : MonoBehaviour
 
 	private bool firstPass = true;
 
-	public static NeckDraw Instance;
 
-	public float GetTargetScale () 
-	{
-		return targetScale;
-	}
-	public float GetPosYScale () 
-	{
-		return scalePosY;
-	}
+
+	public static NeckDraw Instance;
 
 	void Awake () 
 	{
@@ -65,26 +57,20 @@ public class NeckDraw : MonoBehaviour
 		FretPanelObjectList = new List<GameObject>();
 
 
-		Resolution screenRes = Screen.currentResolution;
 
-		float targetaspect = 1536.0f / 2048.0f;
+	}
 
-		float windowaspect = 1536f / 2048f;//debug
-		//float windowaspect = 750f / 1334f;//debug
-		//float windowaspect = 640f / 960f;//debug
-		//float windowaspect = screenRes.width / screenRes.height;
-		float scaleheight = windowaspect / targetaspect;
-		targetScale = scaleheight; 
+	void Start () 
+	{
+		targetScale = ResolutionManager.Instance.GetTargetScale(); 
 
-		scalePosY = 640f / 2048.0f;
-
-		Debug.LogError("targetScale = " + targetScale + "  screen : " + Screen.currentResolution);
-
+		float TapPadY = ResolutionManager.Instance.GetTapPadY();
 
 		Vector3 vScale = TapPad.transform.localScale;
 		TapPad.transform.localScale = new Vector3(vScale.x * targetScale, vScale.y * targetScale, 1f);
 
 		Vector3 vPosition = TapPad.transform.position;
+		vPosition.y = TapPadY;
 		TapPad.transform.position = new Vector3(vPosition.x * targetScale, vPosition.y * targetScale, 1f);
 
 		vPosition = TapPad.transform.position;
@@ -104,11 +90,9 @@ public class NeckDraw : MonoBehaviour
 		fretStartX = vPosition.x;
 		fretStartY += vScale.y * 0.32f;
 
-	}
 
-	void Start () 
-	{
-		
+
+
 		int key, form, style, display;
 		SaveState.Instance.ReadFormState(out key, out form, out style, out display);
 		//Debug.LogError(key.ToString() + " " + form.ToString());

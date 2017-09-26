@@ -37682,6 +37682,79 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2117884169}
+--- !u!1 &2119819661
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2119819663}
+  - component: {fileID: 2119819662}
+  m_Layer: 0
+  m_Name: ResolutionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2119819662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2119819661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a0b91806135074e828cd6572abb524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resScaler:
+  - width: 640
+    height: 960
+    TapPadY: -8
+    ScrollCamLimY: -13
+  - width: 640
+    height: 1136
+    TapPadY: -8
+    ScrollCamLimY: -13
+  - width: 750
+    height: 1334
+    TapPadY: -6.2
+    ScrollCamLimY: -7.5
+  - width: 1242
+    height: 2208
+    TapPadY: -8
+    ScrollCamLimY: -13
+  - width: 1125
+    height: 2436
+    TapPadY: -8
+    ScrollCamLimY: -13
+  - width: 1536
+    height: 2048
+    TapPadY: -8
+    ScrollCamLimY: -13
+  - width: 1668
+    height: 2224
+    TapPadY: -8
+    ScrollCamLimY: -13
+  - width: 2048
+    height: 2732
+    TapPadY: -8
+    ScrollCamLimY: -13
+--- !u!4 &2119819663
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2119819661}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.487094, y: 1.0756073, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2120590124
 GameObject:
   m_ObjectHideFlags: 0
