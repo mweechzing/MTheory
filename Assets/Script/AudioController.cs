@@ -112,18 +112,17 @@ public class AudioController : MonoBehaviour
 
 		AudioClip csource = asource.clip;
 
-		noteClips [0] = MakeSubclip (csource, 0.0f, 0.8f, 0);
-		noteClips [1] = MakeSubclip (csource, 1.0f, 1.8f, 1);
-		noteClips [2] = MakeSubclip (csource, 2.0f, 2.8f, 2);
-		noteClips [3] = MakeSubclip (csource, 3.0f, 3.8f, 3);
-		noteClips [4] = MakeSubclip (csource, 4.0f, 4.8f, 4);
-		noteClips [5] = MakeSubclip (csource, 5.0f, 5.8f, 5);
-		noteClips [6] = MakeSubclip (csource, 6.0f, 6.8f, 6);
-		noteClips [7] = MakeSubclip (csource, 7.0f, 7.8f, 7);
-		noteClips [8] = MakeSubclip (csource, 8.0f, 8.8f, 8);
-		noteClips [9] = MakeSubclip (csource, 9.0f, 9.8f, 9);
-		noteClips [10] = MakeSubclip (csource, 10.0f, 10.8f, 10);
-		noteClips [11] = MakeSubclip (csource, 11.0f, 11.8f, 11);
+		float startTime = 2f;
+		float offsetTime = 2f;
+		float duration = 1.6f;
+		for(int n = 0; n < 12; n++) {
+
+			float st = startTime + offsetTime * (float)n;
+			noteClips [n] = MakeSubclip (csource, st, st + duration, n);
+
+		}
+
+
 	}
 
 
