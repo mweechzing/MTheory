@@ -529,6 +529,24 @@ public class FormData : MonoBehaviour
 		"7",
 	};
 
+	[HideInInspector]
+	public string[] gSampleText = new string[]
+	{
+		"Prophet",
+		"Piano",
+		"Guitar",
+		"Bass",
+	};
+
+	[HideInInspector]
+	public string[] gDroneText = new string[]
+	{
+		"Fog",
+		"Rain",
+		"Mist",
+		"Wind",
+	};
+
 	public string GetFormNameAtIndex(int index)
 	{
 		return( gFormText[index] );

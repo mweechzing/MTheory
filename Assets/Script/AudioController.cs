@@ -22,6 +22,9 @@ public class AudioController : MonoBehaviour
 	private int[] noteData;
 	private int[] intervalData;
 
+	private int SampleBank = 0;
+	private int DroneBank = 0;
+
 	public static AudioController Instance;
 
 	void Awake () 
@@ -87,6 +90,17 @@ public class AudioController : MonoBehaviour
 		elaspedTime = 0f;
 	}
 
+	public void SetSampleBank (int index) 
+	{
+		SampleBank = index;
+		MakeSubClips (SampleBank);
+
+	}
+	public void SetDroneBank (int index) 
+	{
+		DroneBank = index;
+
+	}
 
 
 
