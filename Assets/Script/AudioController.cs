@@ -4,26 +4,47 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour 
 {
+	
 	public AudioSource[] sfxButtonClick;
 	public AudioSource[] NoteSequences;
 	public AudioSource[] NoteKeySeqs;
+	public AudioSource[] BassKeySeqs;
 
-	private AudioClip[] noteClips = new AudioClip[12];
+	private AudioClip[] noteClips = new AudioClip[24];
+	private AudioClip[] bassClips = new AudioClip[24];
 
 	//note animation
 	private bool PlayingNoteSequence = false;
 
-	float elaspedTime = 0f;
-	float waitTime = 0.25f;
+	float elaspedTime1 = 0f;
+	float elaspedTime2 = 0f;
+	float noteWaitTime1 = 1f;
+	float noteWaitTime2 = 1f;
 
 	public const int MaxNotes = 16;
+	private int OctavePointInSequence;
 	private int NumNotesInSequence;
 	private int CurrentNoteInSequence;
 	private int[] noteData;
 	private int[] intervalData;
+	private int[] notes2OctaveData;
+
+	private int NoteSourceIndex = 0;
+	private int BassSourceIndex = 0;
 
 	private int SampleBank = 0;
 	private int DroneBank = 0;
+
+	private int ScaleVoiceIndex = 0;
+	private int PedalToneIndex = 0;
+	private bool accendingORdecending = true;
+	private int RandomChance = 0;
+
+
+	[HideInInspector]
+	public float randomAmount = 0f;
+
+
 
 	public static AudioController Instance;
 
@@ -37,8 +58,10 @@ public class AudioController : MonoBehaviour
 	{
 		intervalData = new int[16] {0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0}; 
 		noteData = new int[16] {-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1}; 
+		notes2OctaveData = new int[32]; 
 
-		MakeSubClips (0);
+		MakeSubClips (0);//notes
+		MakeSubClips (1);//bass
 	}
 
 	void Update () 
@@ -46,25 +69,121 @@ public class AudioController : MonoBehaviour
 		if (PlayingNoteSequence == true) {
 
 			float delta = Time.deltaTime;
-			elaspedTime += delta;
-			if (elaspedTime > waitTime) {
-				elaspedTime = 0f;
 
+			//SCALE NOTES
+			elaspedTime1 += delta;
+			if (elaspedTime1 > noteWaitTime1) {
+				elaspedTime1 = 0f;
 
-				int index = Random.Range (0, NumNotesInSequence);
-
-				int nindex = CurrentNoteInSequence;
-
-				PlayNote (noteData[nindex]);
-
-				CurrentNoteInSequence++;
-				if (CurrentNoteInSequence >= NumNotesInSequence) {
-					CurrentNoteInSequence = 0;
+				int octaveAdd = 0;
+				if (CurrentNoteInSequence >= OctavePointInSequence) {
+					octaveAdd = 12;
 				}
+
+				int noteToPlay = notes2OctaveData[CurrentNoteInSequence] + octaveAdd;
+
+				if (ScaleVoiceIndex == (int)Globals._arpeggioStyle.Accending) {
+
+					CurrentNoteInSequence++;
+					if (CurrentNoteInSequence >= NumNotesInSequence) {
+						CurrentNoteInSequence = 0;
+					}
+
+					int chance = Random.Range (0, 100);
+					if (chance < RandomChance) {
+						int randomNoteIndex = Random.Range (0, NumNotesInSequence);
+
+						//if (randomNoteIndex != CurrentNoteInSequence) {
+							CurrentNoteInSequence = randomNoteIndex;
+						//}
+					}
+
+				
+				} else if (ScaleVoiceIndex == (int)Globals._arpeggioStyle.Decending) {
+					
+					CurrentNoteInSequence--;
+					if (CurrentNoteInSequence < 0) {
+						CurrentNoteInSequence = NumNotesInSequence - 1;
+					}
+
+					int chance = Random.Range (0, 100);
+					if (chance < RandomChance) {
+						int randomNoteIndex = Random.Range (0, NumNotesInSequence);
+
+						//if (randomNoteIndex != CurrentNoteInSequence) {
+							CurrentNoteInSequence = randomNoteIndex;
+						//}
+					}
+
+
+				} else if (ScaleVoiceIndex == (int)Globals._arpeggioStyle.AccendDecend) {
+
+
+					if (accendingORdecending == true) {
+					
+						CurrentNoteInSequence++;
+						if (CurrentNoteInSequence >= NumNotesInSequence) {
+							CurrentNoteInSequence = NumNotesInSequence - 2;
+							accendingORdecending = false;
+						}
+
+					} else {
+					
+						CurrentNoteInSequence--;
+						if (CurrentNoteInSequence < 0) {
+							CurrentNoteInSequence = 1;
+							accendingORdecending = true;
+						}
+
+					}
+
+					int chance = Random.Range (0, 100);
+					if (chance < RandomChance) {
+						int randomNoteIndex = Random.Range (0, NumNotesInSequence);
+
+						//if (randomNoteIndex != CurrentNoteInSequence) {
+							CurrentNoteInSequence = randomNoteIndex;
+						//}
+					}
+
+				}
+					
+				PlayNote (noteToPlay);
+
 			}
+
+
+			//PEDAL TONES NOTES
+			elaspedTime2 += delta;
+			if (elaspedTime2 > noteWaitTime2) {
+				elaspedTime2 = 0f;
+
+
+				int noteToPlay = notes2OctaveData[0];
+
+				PlayBassNote (noteToPlay);
+
+
+			}
+
 		}
 
 	}
+
+	public void SetSoundOptions (int scaleVoiceIndex, float tempo1, int randomChance, int pedalToneIndex, float tempo2) 
+	{
+
+		ScaleVoiceIndex = scaleVoiceIndex;
+		PedalToneIndex = pedalToneIndex;
+
+		noteWaitTime1 = 60f / tempo1;
+		noteWaitTime2 = 60f / tempo2;
+
+		RandomChance = randomChance;
+
+
+	}
+
 
 	public void PlayButtonClick (int index) 
 	{
@@ -73,21 +192,41 @@ public class AudioController : MonoBehaviour
 
 	public void PlayNote (int index) 
 	{
-		NoteKeySeqs[index].clip = noteClips [index];
-		NoteKeySeqs[index].Play ();
+		NoteKeySeqs[NoteSourceIndex].clip = noteClips [index];
+		NoteKeySeqs[NoteSourceIndex].Play ();
+
+		NoteSourceIndex++;
+		if (NoteSourceIndex >= 12) {
+			NoteSourceIndex = 0;
+		}
+	}
+
+	public void PlayBassNote (int index) 
+	{
+		BassKeySeqs[BassSourceIndex].clip = bassClips [index];
+		BassKeySeqs[BassSourceIndex].Play ();
+
+		BassSourceIndex++;
+		if (BassSourceIndex >= 8) {
+			BassSourceIndex = 0;
+		}
 	}
 
 	public void StartPlaySequence () 
 	{
 		PlayingNoteSequence = true;
-		elaspedTime = 0f;
+		elaspedTime1 = 0f;
+		elaspedTime2 = 0f;
 		CurrentNoteInSequence = 0;
+
+		Debug.LogError ("NumNotesInSequence = " + NumNotesInSequence);
 	}
 
 	public void StopPlaySequence () 
 	{
 		PlayingNoteSequence = false;
-		elaspedTime = 0f;
+		elaspedTime1 = 0f;
+		elaspedTime2 = 0f;
 	}
 
 	public void SetSampleBank (int index) 
@@ -113,6 +252,25 @@ public class AudioController : MonoBehaviour
 		}
 
 		NumNotesInSequence =  FormData.Instance.GetKeyNoteBucket(key, formIndex, ref noteData, ref intervalData);
+
+		int index = 0;
+		OctavePointInSequence = NumNotesInSequence;
+
+		for (int octave = 0; octave < 2; octave++) {
+			
+			for (int i = 0; i < NumNotesInSequence; i++) {
+
+				int note = noteData [i];
+
+				notes2OctaveData [index] = note;
+				index++;
+			}
+		}
+
+		NumNotesInSequence = NumNotesInSequence * 2;
+
+
+
 	}
 
 
@@ -129,11 +287,15 @@ public class AudioController : MonoBehaviour
 		float startTime = 2f;
 		float offsetTime = 2f;
 		float duration = 1.6f;
-		for(int n = 0; n < 12; n++) {
+		for(int n = 0; n < 24; n++) {
 
 			float st = startTime + offsetTime * (float)n;
-			noteClips [n] = MakeSubclip (csource, st, st + duration, n);
 
+			if (seqIndex == 0) {
+				noteClips [n] = MakeSubclip (csource, st, st + duration, n);
+			} else if (seqIndex == 1) {
+				bassClips [n] = MakeSubclip (csource, st, st + duration, n);			
+			}
 		}
 
 

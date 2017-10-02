@@ -22,6 +22,14 @@ public static class Globals
 
 	};
 
+	public enum _arpeggioStyle
+	{
+		Accending = 0,
+		Decending,         
+		AccendDecend       
+	};
+
+
 	public const int MaxFrets = 25;
 	public const int MaxStrings = 6;
 	public const int MaxLevels = 8;
@@ -546,6 +554,33 @@ public class FormData : MonoBehaviour
 		"Mist",
 		"Wind",
 	};
+
+
+	[HideInInspector]
+	public string[] gArpeggioStyleText = new string[]
+	{
+		"Accending",
+		"Decending",
+		"Accend/Decend",
+	};
+		
+	[HideInInspector]
+	public string[] gPedalToneText = new string[]
+	{
+		"Root Only",
+		"Root + 5th",
+		"Root + 3rd",
+		"Root + 3rd + 5th",
+	};
+
+
+
+
+
+
+
+
+
 
 	public string GetFormNameAtIndex(int index)
 	{

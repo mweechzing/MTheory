@@ -12,6 +12,7 @@ public class SampleButton : MonoBehaviour
 
 	void Start () 
 	{
+		/*
 		string formText;
 		if (SampleType == 0) {
 			formText = FormData.Instance.gSampleText [SampleIndex];
@@ -22,6 +23,7 @@ public class SampleButton : MonoBehaviour
 		Text[] buttonText = GetComponentsInChildren <Text> ();
 
 		buttonText[0].text = formText;
+		*/
 	}
 
 	void Update () 
@@ -31,13 +33,16 @@ public class SampleButton : MonoBehaviour
 
 	public void ButtonSelected()
 	{
+		SoundOptions.Instance.SetSampleOptions (SampleType, SampleIndex);
+
+		/*
 		AudioController.Instance.PlayButtonClick(0);
 		if (SampleType == 0) {
 			AudioController.Instance.SetSampleBank (SampleIndex);
 		} else {
 			AudioController.Instance.SetDroneBank (SampleIndex);		
 		}
-
+		*/
 		//Debug.LogError ("Send Message form index = " + KeyIndex);
 		//NeckDraw.Instance.SetCurrentKey (KeyIndex);
 	}
