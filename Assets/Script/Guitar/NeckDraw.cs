@@ -7,7 +7,7 @@ public class NeckDraw : MonoBehaviour
 	public int objectPoolSize = 6 * 24;
 
 	public float FretGridWidth = 6f;
-	public float FretGridHeight = 24f;
+	public float FretGridHeight = 26f;
 	public float FretGridDX = 1f;
 	public float FretGridDY = 1f;
 
@@ -33,7 +33,7 @@ public class NeckDraw : MonoBehaviour
 	private float sizeScale = 0.5f;
 
 
-	private const float TargetScreenWidth = 1536.0f;//standard retina
+	//private const float TargetScreenWidth = 1536.0f;//standard retina
 
 	private int NoteDisplayStyle = 0;
 	private int CurrentFormIndex = 0;
@@ -292,7 +292,7 @@ public class NeckDraw : MonoBehaviour
 
 	private void LoadFretPanelObjects()
 	{
-		for (int t = 0; t < 24; t++) {
+		for (int t = 0; t < 26; t++) {
 
 			GameObject _sfObj = Instantiate (Resources.Load ("Prefabs/FretPanelObj", typeof(GameObject))) as GameObject;
 
@@ -342,7 +342,7 @@ public class NeckDraw : MonoBehaviour
 	{
 		float yOffset = 0f;
 		int fretIndex = 0;
-		int[] fretArray = new int[24] { 0,-1,-1,3,-1,5,-1,7,-1,9,-1,-1,12,-1,-1,15,-1,17,-1,19,-1,21,-1,23};
+		int[] fretArray = new int[26] { 0,-1,-1,3,-1,5,-1,7,-1,9,-1,-1,12,-1,-1,15,-1,17,-1,19,-1,21,-1,-1,24,-1};
 
 
 		foreach(GameObject tObj in FretPanelObjectList)

@@ -33,8 +33,8 @@ public class ResolutionManager : MonoBehaviour
 		float h = screenRes.height;
 
 		//debug
-		w = 1668;
-		h = 2224;
+		w = 1536;
+		h = 2048;
 
 
 		float targetaspect = 1536.0f / 2048.0f;
