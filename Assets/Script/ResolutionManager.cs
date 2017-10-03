@@ -20,6 +20,8 @@ public class ResolutionManager : MonoBehaviour
 	private int resIndex;
 	private float targetScale;
 
+	private bool scaledMode = false;
+	private float scaledAmount = 0.75f;
 
 	public static ResolutionManager Instance;
 
@@ -50,6 +52,12 @@ public class ResolutionManager : MonoBehaviour
 	{
 
 	}
+
+	public void SetScaledMode (bool state) 
+	{
+		scaledMode = state;
+	}
+
 	
 	public void SetResIndex (float sw, float sh) 
 	{
@@ -67,16 +75,30 @@ public class ResolutionManager : MonoBehaviour
 
 	public float GetTargetScale () 
 	{
-		return targetScale;
+		float rs = targetScale;
+		if (scaledMode == true) {
+			rs = rs * scaledAmount;
+		}
+		return rs;
 	}
 
 	public float GetTapPadY () 
 	{
+		float rs = resScaler[resIndex].TapPadY;
+		if (scaledMode == true) {
+			rs = rs * scaledAmount;
+		}
+
 		return resScaler[resIndex].TapPadY;
 	}
 		
 	public float GetCamLimY () 
 	{
-		return resScaler[resIndex].ScrollCamLimY;
+		float rs = resScaler[resIndex].ScrollCamLimY;
+		if (scaledMode == true) {
+			rs = rs * scaledAmount;
+		}
+
+		return rs;
 	}
 }

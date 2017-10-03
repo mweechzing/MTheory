@@ -60,8 +60,8 @@ public class AudioController : MonoBehaviour
 		noteData = new int[16] {-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1}; 
 		notes2OctaveData = new int[32]; 
 
-		MakeSubClips (0);//notes
-		MakeSubClips (1);//bass
+		MakeSubClips (0, 2.5f);//notes
+		MakeSubClips (1, 2.5f);//bass
 	}
 
 	void Update () 
@@ -232,7 +232,7 @@ public class AudioController : MonoBehaviour
 	public void SetSampleBank (int index) 
 	{
 		SampleBank = index;
-		MakeSubClips (SampleBank);
+		MakeSubClips (SampleBank, 2f);
 
 	}
 	public void SetDroneBank (int index) 
@@ -278,13 +278,13 @@ public class AudioController : MonoBehaviour
 
 
 
-	private void MakeSubClips (int seqIndex) 
+	private void MakeSubClips (int seqIndex, float startingTime) 
 	{
 		AudioSource asource = NoteSequences[seqIndex]; 
 
 		AudioClip csource = asource.clip;
 
-		float startTime = 2f;
+		float startTime = startingTime;
 		float offsetTime = 2f;
 		float duration = 1.7f;
 		for(int n = 0; n < 24; n++) {
