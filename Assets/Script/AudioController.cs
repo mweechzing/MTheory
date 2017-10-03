@@ -286,7 +286,7 @@ public class AudioController : MonoBehaviour
 
 		float startTime = 2f;
 		float offsetTime = 2f;
-		float duration = 1.6f;
+		float duration = 1.7f;
 		for(int n = 0; n < 24; n++) {
 
 			float st = startTime + offsetTime * (float)n;
