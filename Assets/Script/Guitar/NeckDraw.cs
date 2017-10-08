@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class NeckDraw : MonoBehaviour 
 {
+	[HideInInspector]
+	public enum DrawMode
+	{
+		Guitar = 0,
+		Piano,         
+		Bass       
+	};
+	private DrawMode _drawMode = DrawMode.Guitar;
+
+
 	public int objectPoolSize = 6 * 24;
 
 	public float FretGridWidth = 6f;
@@ -19,10 +29,13 @@ public class NeckDraw : MonoBehaviour
 	public List <GameObject> MarkerObjectList = null;
 	private GameObject MarkerObjectContainer;
 
-
 	[HideInInspector]
 	public List <GameObject> FretPanelObjectList = null;
 	private GameObject FretPanelObjectContainer;
+
+	[HideInInspector]
+	public List <GameObject> KeyboardObjectList = null;
+	private GameObject KeyboardObjectContainer;
 
 	public ColorSet[] NeckNoteColors;
 	public ColorSet[] NeckFretColors;
@@ -60,6 +73,7 @@ public class NeckDraw : MonoBehaviour
 
 		MarkerObjectList = new List<GameObject>();
 		FretPanelObjectList = new List<GameObject>();
+		KeyboardObjectList = new List<GameObject>();
 
 
 
@@ -108,6 +122,7 @@ public class NeckDraw : MonoBehaviour
 
 		MarkerObjectContainer = GameObject.Find ("MarkerObjectContainer");
 		FretPanelObjectContainer = GameObject.Find ("FretPanelObjectContainer");
+		KeyboardObjectContainer = GameObject.Find ("KeyboardObjectContainer");
 
 		LoadFretPanelObjects ();
 		QuerySetFretPanelObjectsLoaded ();
@@ -115,14 +130,42 @@ public class NeckDraw : MonoBehaviour
 		LoadMarkerObjects ();
 		QuerySetMarkerObjectsLoaded ();
 
+		LoadKeyboardObjects ();
+		QuerySetMarkerObjectsLoaded ();
+
+
+
+
+
+
 		GuitarNeck.Instance.InitGuitarNeck ();
 		GuitarNeck.Instance.Clear ();
 		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
-		AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
 
+		if(AudioController.Instance != null)
+			AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
+
+		_drawMode = DrawMode.Piano;
 
 		QuerySetFretPanelObjectsPosition ();
+		QuerySetKeyboardlObjectsPosition();
 		QuerySetMarkerObjectsPosition ();
+
+
+		if(_drawMode == DrawMode.Piano) {
+
+			FretPanelObjectContainer.SetActive(false);
+			KeyboardObjectContainer.SetActive(true);;
+
+		} else if(_drawMode == DrawMode.Guitar) {
+
+			FretPanelObjectContainer.SetActive(true);
+			KeyboardObjectContainer.SetActive(false);;
+
+
+		} else if(_drawMode == DrawMode.Bass) {
+
+		}
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
@@ -170,7 +213,9 @@ public class NeckDraw : MonoBehaviour
 		CurrentFormIndex = formIndex;
 		GuitarNeck.Instance.Clear ();
 		GuitarNeck.Instance.ApplyForm (CurrentKey, formIndex, 0);
-		AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
+
+		if(AudioController.Instance != null)
+			AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
@@ -185,7 +230,9 @@ public class NeckDraw : MonoBehaviour
 
 		GuitarNeck.Instance.Clear ();
 		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
-		AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
+
+		if(AudioController.Instance != null)
+			AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
@@ -201,7 +248,9 @@ public class NeckDraw : MonoBehaviour
 
 		GuitarNeck.Instance.Clear ();
 		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
-		AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
+
+		if(AudioController.Instance != null)
+			AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
@@ -222,7 +271,9 @@ public class NeckDraw : MonoBehaviour
 
 		GuitarNeck.Instance.Clear ();
 		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
-		AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
+
+		if(AudioController.Instance != null)
+			AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
@@ -245,7 +296,9 @@ public class NeckDraw : MonoBehaviour
 
 		GuitarNeck.Instance.Clear ();
 		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
-		AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
+
+		if(AudioController.Instance != null)
+			AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
@@ -320,6 +373,39 @@ public class NeckDraw : MonoBehaviour
 	}
 
 
+	private void LoadKeyboardObjects()
+	{
+		for (int t = 0; t < 41; t++) {
+
+			GameObject _sfObj = Instantiate (Resources.Load ("Prefabs/KeyBoardObj", typeof(GameObject))) as GameObject;
+
+			if (_sfObj != null) {
+
+				if (KeyboardObjectContainer != null) {
+					_sfObj.transform.parent = KeyboardObjectContainer.transform;
+				}
+				_sfObj.name = "keyBoardObj" + t.ToString ();
+
+				//default storage location
+				_sfObj.transform.position = new Vector2 (StoragePosition.transform.position.x, StoragePosition.transform.position.y);
+				_sfObj.transform.localScale = new Vector2 (targetScale, targetScale);
+
+				KeyBoardObj objectScript = _sfObj.GetComponent<KeyBoardObj> ();
+				objectScript.ID = t;
+
+				KeyboardObjectList.Add (_sfObj);
+
+			} else {
+
+				Debug.Log ("Couldn't load keyboard object prefab");
+			}
+		}
+	}
+
+	 
+
+
+
 	void QuerySetMarkerObjectsLoaded() 
 	{
 		foreach(GameObject tObj in MarkerObjectList)
@@ -335,6 +421,15 @@ public class NeckDraw : MonoBehaviour
 		{
 			FretPanelObj objectScript = tObj.GetComponent<FretPanelObj> ();
 			objectScript._State = FretPanelObj.eState.Loaded;
+		}
+	}
+
+	void QuerySetKeyboardObjectsLoaded() 
+	{
+		foreach(GameObject tObj in MarkerObjectList)
+		{
+			KeyBoardObj objectScript = tObj.GetComponent<KeyBoardObj> ();
+			objectScript._State = KeyBoardObj.eState.Loaded;
 		}
 	}
 
@@ -375,6 +470,47 @@ public class NeckDraw : MonoBehaviour
 		}
 	}
 
+	void QuerySetKeyboardlObjectsPosition() 
+	{
+		float yOffset = 0f;
+		int keyIndex = 0;
+		int[] keySeqArray = new int[41] { 0,1,0,1,0,0,1,0,1,0,1,0,0,1,0,1,0,0,1,0,1,0,1,0,0,1,0,1,0,0,1,0,1,0,1,0,0,1,0,1,0};
+		int lastKey = 1;
+
+		foreach(GameObject tObj in KeyboardObjectList)
+		{
+			KeyBoardObj objectScript = tObj.GetComponent<KeyBoardObj> ();
+
+			int k = keySeqArray [keyIndex];
+			if(k == 0) {
+				
+				objectScript.SetWhiteBlack (0);
+
+				if(lastKey == 0) {
+					yOffset += FretGridDY * targetScale;
+				} else {
+					yOffset += (FretGridDY / 2) * targetScale;				
+				}
+
+			} else if(k == 1){
+				
+				objectScript.SetWhiteBlack (1);
+
+				yOffset += (FretGridDY / 2) * targetScale;
+			}
+
+
+			float x = fretStartX;
+			float y = fretStartY + yOffset;
+			objectScript.SetGridPosition (new Vector3(x, y, 1f));
+
+
+			lastKey = k;
+			keyIndex++;
+		}
+	}
+
+
 	void QuerySetMarkerObjectsPosition() 
 	{
 		float xOffset = 0.42f * targetScale;
@@ -383,41 +519,105 @@ public class NeckDraw : MonoBehaviour
 		int rowCount = 0;
 		int noteIndex = 0;
 		int[] notes = new int[Globals.MaxStrings + 1] {(int)Globals._notes.NOTE_E, (int)Globals._notes.NOTE_A, (int)Globals._notes.NOTE_D, (int)Globals._notes.NOTE_G, (int)Globals._notes.NOTE_B, (int)Globals._notes.NOTE_E, 0}; 
+		int[] keySeqArray = new int[41] { 0,1,0,1,0,0,1,0,1,0,1,0,0,1,0,1,0,0,1,0,1,0,1,0,0,1,0,1,0,0,1,0,1,0,1,0,0,1,0,1,0};
 
+		if(_drawMode == DrawMode.Guitar) {
+			noteIndex = notes[colCount];
+			foreach(GameObject tObj in MarkerObjectList)
+			{
+				MarkerObj objectScript = tObj.GetComponent<MarkerObj> ();
 
-		noteIndex = notes[colCount];
-		foreach(GameObject tObj in MarkerObjectList)
-		{
-			MarkerObj objectScript = tObj.GetComponent<MarkerObj> ();
+				float x = gridStartX + xOffset;
+				float y = gridStartY + yOffset;
 
-			float x = gridStartX + xOffset;
-			float y = gridStartY + yOffset;
+				objectScript.SetGridPosition (new Vector3(x,y,-0.5f));
+				objectScript.NoteName = noteIndex;
 
-			objectScript.SetGridPosition (new Vector3(x,y,-0.5f));
-			objectScript.NoteName = noteIndex;
+				yOffset += FretGridDY * targetScale;
+				rowCount++;
+				if (rowCount >= FretGridHeight) {
+					rowCount = 0;
+					yOffset = 0f;
+					xOffset += FretGridDX * targetScale;
+					colCount++;
 
-			yOffset += FretGridDY * targetScale;
-			rowCount++;
-			if (rowCount >= FretGridHeight) {
-				rowCount = 0;
-				yOffset = 0f;
-				xOffset += FretGridDX * targetScale;
-				colCount++;
+					noteIndex = notes [colCount];
 
-				noteIndex = notes [colCount];
-
-			} else {
-			
-				noteIndex++;
-				if (noteIndex >= 12) {
-					noteIndex = 0;
-				}
-			}
-
-			if(colCount >= FretGridWidth) {
-				break;
-			}
+				} else {
 				
+					noteIndex++;
+					if (noteIndex >= 12) {
+						noteIndex = 0;
+					}
+				}
+
+				if(colCount >= FretGridWidth) {
+					break;
+				}
+					
+			}
+		} else if(_drawMode == DrawMode.Piano) {
+
+			int lastKey = 1;
+			int keyIndex = 0;
+			int count = KeyboardObjectList.Count;
+			count--;
+			noteIndex = (int)Globals._notes.NOTE_C;
+			foreach(GameObject tObj in MarkerObjectList)
+			{
+				if(keyIndex < 41) {
+					MarkerObj objectScript = tObj.GetComponent<MarkerObj> ();
+
+					float x = gridStartX + xOffset + 4f;
+					float y = gridStartY + yOffset;
+
+					GameObject key = KeyboardObjectList[count];
+					KeyBoardObj keyObjectScript = key.GetComponent<KeyBoardObj> ();
+					Vector3 vpos = keyObjectScript.GetGridPosition();
+
+					if(keyObjectScript.isBlack == true) {
+						vpos.x = vpos.x - 1f;
+					} else {
+						vpos.x = vpos.x + 1f;
+
+					}
+
+					objectScript.SetGridPosition (new Vector3(vpos.x, vpos.y, -0.5f));
+					objectScript.NoteName = noteIndex;
+
+					int k = keySeqArray [keyIndex];
+					if(k == 0) {
+
+						if(lastKey == 0) {
+							yOffset += FretGridDY * targetScale;
+						} else {
+							yOffset += (FretGridDY / 2) * targetScale;				
+						}
+
+					} else if(k == 1){
+
+
+						yOffset += (FretGridDY / 2) * targetScale;
+					}
+
+					noteIndex++;
+					if (noteIndex >= 12) {
+						noteIndex = 0;
+					}
+
+					count--;
+					if(count < 0)
+						count = 0;
+
+					lastKey = k;
+					keyIndex++;
+				} else {
+					break;
+				}
+
+			}
+		
+		
 		}
 	}
 
@@ -498,6 +698,14 @@ public class NeckDraw : MonoBehaviour
 		}
 	}
 
+	void QuerySetObjectsResetPosition() 
+	{
+		foreach(GameObject tObj in MarkerObjectList)
+		{
+			MarkerObj objectScript = tObj.GetComponent<MarkerObj> ();
+			objectScript.SetGridPosition( new Vector3 (StoragePosition.transform.position.x, StoragePosition.transform.position.y, -0.5f) );
+		}
+	}
 
 	private Color GetColorFromSet(ColorSet cs, int index)
 	{
@@ -580,6 +788,34 @@ public class NeckDraw : MonoBehaviour
 
 			}
 		}
+	}
+
+
+
+	public void RefreshDrawArea(DrawMode dm)
+	{
+		_drawMode = dm; 
+		if(_drawMode == DrawMode.Piano) {
+
+			FretPanelObjectContainer.SetActive(false);
+			KeyboardObjectContainer.SetActive(true);;
+
+		} else if(_drawMode == DrawMode.Guitar) {
+			
+			FretPanelObjectContainer.SetActive(true);
+			KeyboardObjectContainer.SetActive(false);;
+
+
+		} else if(_drawMode == DrawMode.Bass) {
+
+		}
+
+		QuerySetObjectsResetPosition();
+		QuerySetMarkerObjectsPosition ();
+
+		QuerySetObjectsResetColor ();
+		ApplyForm ();
+
 	}
 
 }

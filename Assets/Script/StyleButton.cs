@@ -23,7 +23,8 @@ public class StyleButton : MonoBehaviour
 
 	public void ButtonSelected()
 	{
-		AudioController.Instance.PlayButtonClick(0);
+		if(AudioController.Instance != null)
+			AudioController.Instance.PlayButtonClick(0);
 
 		//Debug.LogError ("Send Message form index = " + KeyIndex);
 		NeckDraw.Instance.SetCurrentStyleIndex (StyleIndex);

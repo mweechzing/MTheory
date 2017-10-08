@@ -18,7 +18,8 @@ public class UICanvas : MonoBehaviour
 	
 	public void ToggleMainPanel () 
 	{
-		AudioController.Instance.PlayButtonClick(1);
+		if(AudioController.Instance != null)
+			AudioController.Instance.PlayButtonClick(1);
 
 		if (OnOff == true) {
 			MainPanel.gameObject.SetActive (false);
@@ -31,7 +32,8 @@ public class UICanvas : MonoBehaviour
 
 	public void ToggleOptionsPanel () 
 	{
-		AudioController.Instance.PlayButtonClick(1);
+		if(AudioController.Instance != null)
+			 AudioController.Instance.PlayButtonClick(1);
 
 		if (OnOff == true) {
 			MainPanel.gameObject.SetActive (false);
@@ -44,6 +46,17 @@ public class UICanvas : MonoBehaviour
 			SoundOptions.gameObject.SetActive(false);
 			OnOff = true;
 		}
+	}
+
+
+	public void SwitchToFretboard () 
+	{
+		NeckDraw.Instance.RefreshDrawArea(NeckDraw.DrawMode.Guitar);
+	}
+		
+	public void SwitchToKeyBoard () 
+	{
+		NeckDraw.Instance.RefreshDrawArea(NeckDraw.DrawMode.Piano);
 	}
 
 }

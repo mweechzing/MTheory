@@ -164,6 +164,22 @@ public class FormData : MonoBehaviour
 
 		7,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
 
+		2,2,2,2,2,2,8,0,0,0,0,0,  0,0,0,0,	//Messian Mode 1
+		1,2,1,2,1,2,1,2,8,0,0,0,  0,0,0,0,	//Messian Mode 2 
+		2,1,1,2,1,1,2,1,1,8,0,0,  0,0,0,0,	//Messian Mode 3 
+		1,1,3,1,1,1,3,1,8,0,0,0,  0,0,0,0,	//Messian Mode 4 
+		1,4,1,1,4,1,8,0,0,0,0,0,  0,0,0,0,	//Messian Mode 5 
+		2,2,1,1,2,2,1,1,8,0,0,0,  0,0,0,0,	//Messian Mode 6 
+		1,1,1,2,1,1,1,1,2,1,8,0,  0,0,0,0,	//Messian Mode 7 
+
+		1,5,1,5,8,0,0,0,0,0,0,0,  0,0,0,0,//1 5 1 5  Messiaen truncated mode 5
+		5,1,5,1,8,0,0,0,0,0,0,0,  0,0,0,0,//5 1 5 1  Messiaen truncated mode 5 inverse
+		2,4,2,4,8,0,0,0,0,0,0,0,  0,0,0,0,//2 4 2 4  Messiaen truncated mode 6
+		4,2,4,2,8,0,0,0,0,0,0,0,  0,0,0,0,//4 2 4 2  Messiaen truncated mode 6 inverse
+
+		8,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
+
+
 		3,4,5,8,0,0,0,0,0,0,0,0,  0,0,0,0,//3 4 5  Peruvian tritonic 2 	
 		3,7,2,8,0,0,0,0,0,0,0,0,  0,0,0,0,//3 7 2  Ute tritonic
 		4,3,5,8,0,0,0,0,0,0,0,0,  0,0,0,0,//4 3 5  Peruvian tritonic 1 
@@ -171,10 +187,6 @@ public class FormData : MonoBehaviour
 		5,5,2,8,0,0,0,0,0,0,0,0,  0,0,0,0,//5 5 2  Sansagari
 		6,1,5,8,0,0,0,0,0,0,0,0,  0,0,0,0,//6 1 5  Raga Ongkari
 
-		1,5,1,5,8,0,0,0,0,0,0,0,  0,0,0,0,//1 5 1 5  Messiaen truncated mode 5
-		5,1,5,1,8,0,0,0,0,0,0,0,  0,0,0,0,//5 1 5 1  Messiaen truncated mode 5 inverse
-		2,4,2,4,8,0,0,0,0,0,0,0,  0,0,0,0,//2 4 2 4  Messiaen truncated mode 6
-		4,2,4,2,8,0,0,0,0,0,0,0,  0,0,0,0,//4 2 4 2  Messiaen truncated mode 6 inverse
 		1,4,3,4,8,0,0,0,0,0,0,0,  0,0,0,0,//1 4 3 4  Raga Lavangi 
 		2,1,7,2,8,0,0,0,0,0,0,0,  0,0,0,0,//2 1 7 2  Warao tetratonic
 		2,2,3,5,8,0,0,0,0,0,0,0,  0,0,0,0,//2 2 3 5  Eskimo tetratonic (Alaska: Bethel)
@@ -348,6 +360,19 @@ public class FormData : MonoBehaviour
 
 		"space",
 
+		"Messiaen Mode 1",
+		"Messiaen Mode 2",
+		"Messiaen Mode 3",
+		"Messiaen Mode 4",
+		"Messiaen Mode 5",
+		"Messiaen Mode 6",
+		"Messiaen Mode 7",
+		"Messiaen trunc mode 5",
+		"Messiaen trunc mode 5 inv",
+		"Messiaen trun mode 6",
+		"Messiaen trunc mode 6 inv",
+
+		"space",
 
 		//@"Exotic 3 note Scales",
 		"Peruvian tritonic 2",
@@ -358,10 +383,6 @@ public class FormData : MonoBehaviour
 		"Raga Ongkari",
 
 		//@"Exotic 4 note Scales",
-		"Messiaen trunc mode 5",
-		"Messiaen trunc mode 5 inv",
-		"Messiaen trun mode 6",
-		"Messiaen trunc mode 6 inv",
 		"Raga Lavangi",
 		"Warao tetratonic",
 		"Eskimo tetratonic",
@@ -371,8 +392,6 @@ public class FormData : MonoBehaviour
 		"Raga Sumukam",
 		"Raga Mahathi",
 		"Bi Yu: China",
-
-
 
 		//@"Exotic 5 note Scales"}
 
