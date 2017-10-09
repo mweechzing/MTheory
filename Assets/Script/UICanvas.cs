@@ -9,7 +9,16 @@ public class UICanvas : MonoBehaviour
 	public GameObject HeaderDisplayButton;
 
 	private bool OnOff = true;
-	private bool OptionsOnOff = false;
+	private bool FormListState = false;
+
+
+	public static UICanvas Instance = null;
+
+	void Awake () 
+	{
+		Instance = this;
+
+	}
 
 	void Start () 
 	{
@@ -18,6 +27,9 @@ public class UICanvas : MonoBehaviour
 	
 	public void ToggleMainPanel () 
 	{
+		if(FormListState == true)
+			return;
+		
 		if(AudioController.Instance != null)
 			AudioController.Instance.PlayButtonClick(1);
 
@@ -32,6 +44,9 @@ public class UICanvas : MonoBehaviour
 
 	public void ToggleOptionsPanel () 
 	{
+		if(FormListState == true)
+			return;
+		
 		if(AudioController.Instance != null)
 			 AudioController.Instance.PlayButtonClick(1);
 
@@ -39,15 +54,21 @@ public class UICanvas : MonoBehaviour
 			MainPanel.gameObject.SetActive (false);
 			HeaderDisplayButton.gameObject.SetActive(false);
 			SoundOptions.gameObject.SetActive(true);
+			TapPad.Instance.DragEnabled = false;
 			OnOff = false;
 		} else {
 			MainPanel.gameObject.SetActive (true);
 			HeaderDisplayButton.gameObject.SetActive(true);
 			SoundOptions.gameObject.SetActive(false);
+			TapPad.Instance.DragEnabled = true;
 			OnOff = true;
 		}
 	}
 
+	public void ShowingFormsList (bool state) 
+	{
+		FormListState = state;
+	}
 
 	public void SwitchToFretboard () 
 	{

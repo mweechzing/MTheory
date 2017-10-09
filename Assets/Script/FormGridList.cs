@@ -89,12 +89,14 @@ public class FormGridList : MonoBehaviour
 		//NeckDraw.Instance.ReApplyForm (_selectedformIndex);
 		gameObject.SetActive (false);
 		TapPad.Instance.DragEnabled = true;
+		UICanvas.Instance.ShowingFormsList(false);
 	}
 
 	public void ButtonShowSelf()
 	{
 		TapPad.Instance.DragEnabled = false;
 		gameObject.SetActive (true);
+		UICanvas.Instance.ShowingFormsList(true);
 	}
 
 	public Color GetColorCodeForIndex(int index)
