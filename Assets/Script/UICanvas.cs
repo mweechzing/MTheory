@@ -7,6 +7,7 @@ public class UICanvas : MonoBehaviour
 	public GameObject MainPanel;
 	public GameObject SoundOptions;
 	public GameObject HeaderDisplayButton;
+	public GameObject FormGridListDisplay;
 
 	private bool OnOff = true;
 	private bool FormListState = false;
@@ -22,7 +23,8 @@ public class UICanvas : MonoBehaviour
 
 	void Start () 
 	{
-		
+		FormGridListDisplay.SetActive(false);
+		SoundOptions.SetActive(false);
 	}
 	
 	public void ToggleMainPanel () 

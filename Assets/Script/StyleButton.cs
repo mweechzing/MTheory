@@ -14,6 +14,13 @@ public class StyleButton : MonoBehaviour
 		Text[] buttonText = GetComponentsInChildren <Text> ();
 
 		buttonText[0].text = styleText;
+
+		Color hiliteColor = FormGridList.Instance.GetColorCodeForIndex(11);
+		Button button = GetComponent<Button>();
+		ColorBlock cb = button.colors;
+		cb.highlightedColor = hiliteColor;
+		button.colors = cb;
+
 	}
 
 	void Update () 

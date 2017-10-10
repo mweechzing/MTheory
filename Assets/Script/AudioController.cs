@@ -39,7 +39,8 @@ public class AudioController : MonoBehaviour
 	private int PedalToneIndex = 0;
 	private bool accendingORdecending = true;
 	private int RandomChance = 0;
-
+	private int RandomChance2 = 0;
+	private int FifthNote = 0;
 
 	[HideInInspector]
 	public float randomAmount = 0f;
@@ -75,6 +76,8 @@ public class AudioController : MonoBehaviour
 			if (elaspedTime1 > noteWaitTime1) {
 				elaspedTime1 = 0f;
 
+				bool skipNote = false;
+
 				int octaveAdd = 0;
 				if (CurrentNoteInSequence >= OctavePointInSequence) {
 					octaveAdd = 12;
@@ -93,9 +96,11 @@ public class AudioController : MonoBehaviour
 					if (chance < RandomChance) {
 						int randomNoteIndex = Random.Range (0, NumNotesInSequence);
 
-						//if (randomNoteIndex != CurrentNoteInSequence) {
+						if (randomNoteIndex != CurrentNoteInSequence) {
 							CurrentNoteInSequence = randomNoteIndex;
-						//}
+						} else {
+							skipNote = true;
+						}
 					}
 
 				
@@ -110,9 +115,11 @@ public class AudioController : MonoBehaviour
 					if (chance < RandomChance) {
 						int randomNoteIndex = Random.Range (0, NumNotesInSequence);
 
-						//if (randomNoteIndex != CurrentNoteInSequence) {
+						if (randomNoteIndex != CurrentNoteInSequence) {
 							CurrentNoteInSequence = randomNoteIndex;
-						//}
+						} else {
+							skipNote = true;
+						}
 					}
 
 
@@ -141,28 +148,101 @@ public class AudioController : MonoBehaviour
 					if (chance < RandomChance) {
 						int randomNoteIndex = Random.Range (0, NumNotesInSequence);
 
-						//if (randomNoteIndex != CurrentNoteInSequence) {
+						if (randomNoteIndex != CurrentNoteInSequence) {
 							CurrentNoteInSequence = randomNoteIndex;
-						//}
+						} else {
+							skipNote = true;
+						}
 					}
+
+				} else if (ScaleVoiceIndex == (int)Globals._arpeggioStyle.RandomChords) {
+
+					//get root note
+					if (accendingORdecending == true) {
+
+						CurrentNoteInSequence++;
+						if (CurrentNoteInSequence >= NumNotesInSequence) {
+							CurrentNoteInSequence = NumNotesInSequence - 2;
+							accendingORdecending = false;
+						}
+
+					} else {
+
+						CurrentNoteInSequence--;
+						if (CurrentNoteInSequence < 0) {
+							CurrentNoteInSequence = 1;
+							accendingORdecending = true;
+						}
+
+					}
+
+					int chance = Random.Range (0, 100);
+					if (chance < RandomChance) {
+						int randomNoteIndex = Random.Range (0, NumNotesInSequence);
+
+						if (randomNoteIndex != CurrentNoteInSequence) {
+							CurrentNoteInSequence = randomNoteIndex;
+						} else {
+							skipNote = true;
+						}
+					}
+
+					int randomChordNoteIndex = Random.Range (0, NumNotesInSequence);
+					int noteToPlay2 = notes2OctaveData[randomChordNoteIndex] + octaveAdd;
+					if(noteToPlay2 != noteToPlay) {
+						PlayNote (noteToPlay2);
+					}
+
+					randomChordNoteIndex = Random.Range (0, NumNotesInSequence);
+					int noteToPlay3 = notes2OctaveData[randomChordNoteIndex] + octaveAdd;
+					if(noteToPlay2 != noteToPlay3 && noteToPlay != noteToPlay3) {
+						PlayNote (noteToPlay3);
+					}
+
+
 
 				}
 					
-				PlayNote (noteToPlay);
-
+				if(skipNote == false) {
+					PlayNote (noteToPlay);
+				}
 			}
 
 
 			//PEDAL TONES NOTES
+			bool dontPlay = false;
 			elaspedTime2 += delta;
 			if (elaspedTime2 > noteWaitTime2) {
 				elaspedTime2 = 0f;
 
-
 				int noteToPlay = notes2OctaveData[0];
 
-				PlayBassNote (noteToPlay);
+				if(PedalToneIndex == 0) {//just root
 
+					//bool skipNote = false;
+					int chance = Random.Range (0, 100);
+					if (chance < RandomChance2) {
+						
+					}
+
+				}
+				else if(PedalToneIndex == 1) {//root + 5th
+
+					int chance = Random.Range (0, 100);
+					if (chance < 25) {
+						if(FifthNote > 0) {
+							noteToPlay = FifthNote;
+						
+						}
+					}
+
+				} else {
+					dontPlay = true;
+				}
+					
+				if(dontPlay == false) {
+					PlayBassNote (noteToPlay);
+				}
 
 			}
 
@@ -170,7 +250,7 @@ public class AudioController : MonoBehaviour
 
 	}
 
-	public void SetSoundOptions (int scaleVoiceIndex, float tempo1, int randomChance, int pedalToneIndex, float tempo2) 
+	public void SetSoundOptions (int scaleVoiceIndex, float tempo1, int randomChance, int pedalToneIndex, float tempo2, int randomChance2) 
 	{
 
 		ScaleVoiceIndex = scaleVoiceIndex;
@@ -180,6 +260,8 @@ public class AudioController : MonoBehaviour
 		noteWaitTime2 = 60f / tempo2;
 
 		RandomChance = randomChance;
+		RandomChance2 = randomChance2;
+
 
 
 	}
@@ -252,6 +334,37 @@ public class AudioController : MonoBehaviour
 		}
 
 		NumNotesInSequence =  FormData.Instance.GetKeyNoteBucket(key, formIndex, ref noteData, ref intervalData);
+
+		//Debug.LogError("intervals : " + intervalData[0] + " " + intervalData[1] + " " + intervalData[2] + " " + intervalData[3] + " " + intervalData[4] +  " " + intervalData[5]);
+
+
+		FifthNote = 0;
+		for (int i = 0; i < MaxNotes; i++) {
+			int interval = intervalData[i];
+			if(interval == 7){
+				FifthNote = noteData[i];
+				break;
+			}
+		}
+		if(FifthNote == 0) {
+			for (int i = 0; i < MaxNotes; i++) {
+				int interval = intervalData[i];
+				if(interval == 6){ //b5th
+					FifthNote = noteData[i];
+					break;
+				}
+			}
+		}
+		if(FifthNote == 0) {
+			for (int i = 0; i < MaxNotes; i++) {
+				int interval = intervalData[i];
+				if(interval == 8){ //#5th
+					FifthNote = noteData[i];
+					break;
+				}
+			}
+		}
+
 
 		int index = 0;
 		OctavePointInSequence = NumNotesInSequence;

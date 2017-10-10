@@ -14,6 +14,12 @@ public class KeyButton : MonoBehaviour
 		Text[] buttonText = GetComponentsInChildren <Text> ();
 
 		buttonText[0].text = formText;
+
+		Color hiliteColor = FormGridList.Instance.GetColorCodeForIndex(11);
+		Button button = GetComponent<Button>();
+		ColorBlock cb = button.colors;
+		cb.highlightedColor = hiliteColor;
+		button.colors = cb;
 	}
 
 	void Update () 

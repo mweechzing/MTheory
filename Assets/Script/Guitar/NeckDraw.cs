@@ -58,6 +58,8 @@ public class NeckDraw : MonoBehaviour
 
 	private bool firstPass = true;
 
+	private float MarkerLabelRotation = 0f;
+
 	//note animation
 	private bool AnimateNeck = false;
 
@@ -620,6 +622,27 @@ public class NeckDraw : MonoBehaviour
 		
 		}
 	}
+
+	public void ToggleMarkerRotation()
+	{
+		if(MarkerLabelRotation == 0f) {
+			MarkerLabelRotation = 90f;
+		}else{
+			MarkerLabelRotation = 0f;
+		}
+
+		QuerySetMarkerObjectsRotation();
+	}
+
+	private void QuerySetMarkerObjectsRotation() 
+	{
+		foreach(GameObject tObj in MarkerObjectList)
+		{
+			MarkerObj objectScript = tObj.GetComponent<MarkerObj> ();
+			objectScript.SetMarkerLabelRotation(MarkerLabelRotation);
+		}
+	}
+
 
 
 	void ApplyForm() 

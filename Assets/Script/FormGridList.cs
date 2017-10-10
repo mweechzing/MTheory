@@ -94,8 +94,10 @@ public class FormGridList : MonoBehaviour
 
 	public void ButtonShowSelf()
 	{
-		TapPad.Instance.DragEnabled = false;
 		gameObject.SetActive (true);
+
+		//TODO: this is a problem
+		TapPad.Instance.DragEnabled = false;
 		UICanvas.Instance.ShowingFormsList(true);
 	}
 

@@ -37,11 +37,14 @@ public class FormButton : MonoBehaviour
 			buttonText[0].resizeTextMaxSize = 30;
 		}
 
+		Color hiliteColor = FormGridList.Instance.GetColorCodeForIndex(11);
 
 		Color newColor = FormGridList.Instance.GetColorCodeForIndex(ColorIndex);
 		Button button = GetComponent<Button>();
 		ColorBlock cb = button.colors;
 		cb.normalColor = newColor;
+		cb.highlightedColor = hiliteColor;
+
 		button.colors = cb;
 
 	}

@@ -16,6 +16,9 @@ public class SoundOptions : MonoBehaviour
 	public GameObject RandomSlider1;
 	public GameObject RandomSlider1text;
 
+	public GameObject RandomSlider2;
+	public GameObject RandomSlider2text;
+
 	[HideInInspector]
 	private float SliderValue1;
 
@@ -25,6 +28,7 @@ public class SoundOptions : MonoBehaviour
 	TextMeshProUGUI proTextTempo1 = null;
 	TextMeshProUGUI proTextTempo2 = null;
 	TextMeshProUGUI proTextRandom1 = null;
+	TextMeshProUGUI proTextRandom2 = null;
 
 	public static SoundOptions Instance;
 
@@ -39,6 +43,7 @@ public class SoundOptions : MonoBehaviour
 		proTextTempo1 = TempoSlider1text.GetComponent<TextMeshProUGUI> ();
 		proTextTempo2 = TempoSlider2text.GetComponent<TextMeshProUGUI> ();
 		proTextRandom1 = RandomSlider1text.GetComponent<TextMeshProUGUI> ();
+		proTextRandom2 = RandomSlider2text.GetComponent<TextMeshProUGUI> ();
 
 	}
 
@@ -56,6 +61,11 @@ public class SoundOptions : MonoBehaviour
 		Slider slider3 = RandomSlider1.GetComponent<Slider> ();
 		float value3 = slider3.value;
 		proTextRandom1.SetText ("Random Variation : " + value3);
+
+		Slider slider4 = RandomSlider2.GetComponent<Slider> ();
+		float value4 = slider4.value;
+		proTextRandom2.SetText ("Random Variation : " + value4);
+
 	}
 
 	public void ButtonGO()
@@ -73,7 +83,10 @@ public class SoundOptions : MonoBehaviour
 		Slider slider3 = RandomSlider1.GetComponent<Slider> ();
 		float value3 = slider3.value;
 
-		AudioController.Instance.SetSoundOptions (scaleVoiceIndex, value1, (int)value3, pedalToneIndex, value2);
+		Slider slider4 = RandomSlider2.GetComponent<Slider> ();
+		float value4 = slider4.value;
+
+		AudioController.Instance.SetSoundOptions (scaleVoiceIndex, value1, (int)value3, pedalToneIndex, value2, (int)value4);
 
 	}
 

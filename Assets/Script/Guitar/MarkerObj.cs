@@ -100,7 +100,16 @@ public class MarkerObj : MonoBehaviour
 		tp.SetText (label);
 
 		tp.color = c;
+
 	}	
+
+	public void SetMarkerLabelRotation(float angle) 
+	{
+		TextMeshPro tp = GetComponentInChildren<TextMeshPro> ();
+		tp.transform.rotation =  Quaternion.Euler(new Vector3(0, 0, angle));
+
+	}
+		
 
 	public void SetVisibleStatus(bool status)
 	{

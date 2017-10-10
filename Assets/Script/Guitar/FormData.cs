@@ -26,7 +26,8 @@ public static class Globals
 	{
 		Accending = 0,
 		Decending,         
-		AccendDecend       
+		AccendDecend,
+		RandomChords
 	};
 
 
@@ -257,23 +258,23 @@ public class FormData : MonoBehaviour
 
 		//@"Harmonic Minor Scale & Modes",
 		"Harmonic Minor",
-		"H.M.2",
-		"H.M.3",
-		"H.M.4",
-		"H.M.5",
-		"H.M.6",
-		"H.M.7",
+		"Locrian #6",
+		"Ionian #5",
+		"Dorian #4",
+		"Phrygian Dom",
+		"Lydian #2",
+		"Superlocrian",
 
 		"space",
 
 		//@"Melodic Minor Scale & Modes",
 		"Melodic Minor",
-		"M.M.2",
-		"M.M.3",
-		"M.M.4",
-		"M.M.5",
-		"M.M.6",
-		"M.M.7 ",
+		"Phrygidorian",
+		"Lydian Aug",
+		"Lydomyxian",
+		"Myxaeolian",
+		"Aeolocrian",
+		"Altered Dom",
 
 		"space",
 
@@ -581,6 +582,7 @@ public class FormData : MonoBehaviour
 		"Accending",
 		"Decending",
 		"Accend/Decend",
+		"Random Chords",
 	};
 		
 	[HideInInspector]
@@ -588,8 +590,7 @@ public class FormData : MonoBehaviour
 	{
 		"Root Only",
 		"Root + 5th",
-		"Root + 3rd",
-		"Root + 3rd + 5th",
+		"No Pedal Tone",
 	};
 
 
