@@ -33,6 +33,9 @@ public class SampleButton : MonoBehaviour
 
 	public void ButtonSelected()
 	{
+		if(AudioController.Instance != null)
+			AudioController.Instance.PlayButtonClick(0);
+		
 		SoundOptions.Instance.SetSampleOptions (SampleType, SampleIndex);
 
 		/*

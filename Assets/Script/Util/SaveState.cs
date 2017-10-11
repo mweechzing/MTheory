@@ -43,6 +43,30 @@ public class SaveState : MonoBehaviour
 
 	}
 
+	public void WriteSaveStateInt (string key, int value) 
+	{
+		PlayerPrefs.SetInt (key, value);
+		PlayerPrefs.Save ();
+
+	}
+
+	public int ReadSaveStateInt (string key) 
+	{
+		int value = 0;
+
+		if(PlayerPrefs.HasKey(key)) {
+			value = PlayerPrefs.GetInt (key);
+		} else {
+
+			value = 0;
+			WriteSaveStateInt (key, value);
+		}
+
+		return value;
+
+	}
+
+
 
 
 }

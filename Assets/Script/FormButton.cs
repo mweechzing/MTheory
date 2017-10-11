@@ -51,6 +51,9 @@ public class FormButton : MonoBehaviour
 
 	public void ButtonSelected()
 	{
+		if(AudioController.Instance != null)
+			AudioController.Instance.PlayButtonClick(0);
+		
 		//Debug.LogError ("Send Message form index = " + _formIndex);
 		NeckDraw.Instance.SetCurrentFormIndex(FormIndex);
 	}

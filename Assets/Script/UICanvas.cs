@@ -69,16 +69,25 @@ public class UICanvas : MonoBehaviour
 
 	public void ShowingFormsList (bool state) 
 	{
+		if(AudioController.Instance != null)
+			AudioController.Instance.PlayButtonClick(0);
+		
 		FormListState = state;
 	}
 
 	public void SwitchToFretboard () 
 	{
+		if(AudioController.Instance != null)
+			AudioController.Instance.PlayButtonClick(0);
+		
 		NeckDraw.Instance.RefreshDrawArea(NeckDraw.DrawMode.Guitar);
 	}
 		
 	public void SwitchToKeyBoard () 
 	{
+		if(AudioController.Instance != null)
+			AudioController.Instance.PlayButtonClick(0);
+		
 		NeckDraw.Instance.RefreshDrawArea(NeckDraw.DrawMode.Piano);
 	}
 

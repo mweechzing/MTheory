@@ -113,6 +113,8 @@ public class NeckDraw : MonoBehaviour
 
 
 
+		_drawMode = (DrawMode)SaveState.Instance.ReadSaveStateInt("drawMode");
+
 
 		int key, form, style, display;
 		SaveState.Instance.ReadFormState(out key, out form, out style, out display);
@@ -138,8 +140,6 @@ public class NeckDraw : MonoBehaviour
 
 
 
-
-
 		GuitarNeck.Instance.InitGuitarNeck ();
 		GuitarNeck.Instance.Clear ();
 		GuitarNeck.Instance.ApplyForm (CurrentKey, CurrentFormIndex, 0);
@@ -147,7 +147,6 @@ public class NeckDraw : MonoBehaviour
 		if(AudioController.Instance != null)
 			AudioController.Instance.ApplyFormAudio (CurrentKey, CurrentFormIndex);
 
-		_drawMode = DrawMode.Piano;
 
 		QuerySetFretPanelObjectsPosition ();
 		QuerySetKeyboardlObjectsPosition();
@@ -171,6 +170,10 @@ public class NeckDraw : MonoBehaviour
 
 		QuerySetObjectsResetColor ();
 		ApplyForm ();
+
+		MarkerLabelRotation = (float)SaveState.Instance.ReadSaveStateInt("markerRotation");
+		QuerySetMarkerObjectsRotation();
+
 
 	}
 
@@ -631,7 +634,13 @@ public class NeckDraw : MonoBehaviour
 			MarkerLabelRotation = 0f;
 		}
 
+		SaveState.Instance.WriteSaveStateInt("markerRotation", (int)MarkerLabelRotation);
+
 		QuerySetMarkerObjectsRotation();
+
+		if(AudioController.Instance != null)
+			AudioController.Instance.PlayButtonClick(0);
+		
 	}
 
 	private void QuerySetMarkerObjectsRotation() 
@@ -818,6 +827,9 @@ public class NeckDraw : MonoBehaviour
 	public void RefreshDrawArea(DrawMode dm)
 	{
 		_drawMode = dm; 
+
+		SaveState.Instance.WriteSaveStateInt("drawMode", (int)dm);
+
 		if(_drawMode == DrawMode.Piano) {
 
 			FretPanelObjectContainer.SetActive(false);
