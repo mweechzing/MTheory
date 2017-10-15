@@ -10,8 +10,6 @@ public class FormGridList : MonoBehaviour
 
 	public GameObject GoButton;
 
-	public ColorSet FormColorCodes;
-
 	private int _selectedformIndex = 0;
 	public int SelectedFormIndex {
 		get {return _selectedformIndex; } 
@@ -103,7 +101,7 @@ public class FormGridList : MonoBehaviour
 
 	public Color GetColorCodeForIndex(int index)
 	{
-		return( GetColorFromSet(FormColorCodes, index));
+		return( GetColorFromSet(NeckDraw.Instance.FormColorCodes, index));
 	}
 
 	

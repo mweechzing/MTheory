@@ -34,10 +34,16 @@ public class ColorSet
 	private Color mColor12 = Color.white;
 	[SerializeField]
 	private Color mColorText = Color.white;
+	[SerializeField]
+	private Color mColorAux1 = Color.white;
+	[SerializeField]
+	private Color mColorAux2 = Color.white;
+	[SerializeField]
+	private Color mColorAux3 = Color.white;
 
 
 	[SerializeField]
-	private int[] mColorCodes; 
+	private int[] mColorCodes = null; 
 	public int GetColorCode(int index)
 	{
 		return( mColorCodes[index] );
@@ -120,6 +126,24 @@ public class ColorSet
 	{
 		get { return mColorText; }
 		set { mColorText = value; }
+	}
+
+	public Color ColorAux1
+	{
+		get { return mColorAux1; }
+		set { mColorAux1 = value; }
+	}
+
+	public Color ColorAux2
+	{
+		get { return mColorAux2; }
+		set { mColorAux2 = value; }
+	}
+
+	public Color ColorAux3
+	{
+		get { return mColorAux3; }
+		set { mColorAux3 = value; }
 	}
 
 }

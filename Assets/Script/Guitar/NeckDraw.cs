@@ -40,6 +40,8 @@ public class NeckDraw : MonoBehaviour
 	public ColorSet[] NeckNoteColors;
 	public ColorSet[] NeckFretColors;
 
+	public ColorSet FormColorCodes;
+
 
 
 	private float targetScale = 1.0f;
@@ -368,6 +370,8 @@ public class NeckDraw : MonoBehaviour
 				FretPanelObj objectScript = _sfObj.GetComponent<FretPanelObj> ();
 				objectScript.ID = t;
 
+				objectScript.SetStringColors(Color.grey, Color.green);
+
 				FretPanelObjectList.Add (_sfObj);
 
 			} else {
@@ -422,16 +426,30 @@ public class NeckDraw : MonoBehaviour
 
 	void QuerySetFretPanelObjectsLoaded() 
 	{
-		foreach(GameObject tObj in MarkerObjectList)
+		foreach(GameObject tObj in FretPanelObjectList)
 		{
 			FretPanelObj objectScript = tObj.GetComponent<FretPanelObj> ();
 			objectScript._State = FretPanelObj.eState.Loaded;
 		}
 	}
 
+	void QuerySetFretPanelObjectsStringColor() 
+	{
+		ColorSet cs = NeckNoteColors[CurrentStyle];
+		Color c1 = cs.ColorAux1;
+		Color c2 = cs.ColorAux2;
+		Color c3 = cs.ColorAux3;
+		foreach(GameObject tObj in FretPanelObjectList)
+		{
+			FretPanelObj objectScript = tObj.GetComponent<FretPanelObj> ();
+			objectScript.SetStringColors(c1, c2);
+			objectScript.SetObjectColor(c3);
+		}
+	}
+
 	void QuerySetKeyboardObjectsLoaded() 
 	{
-		foreach(GameObject tObj in MarkerObjectList)
+		foreach(GameObject tObj in KeyboardObjectList)
 		{
 			KeyBoardObj objectScript = tObj.GetComponent<KeyBoardObj> ();
 			objectScript._State = KeyBoardObj.eState.Loaded;
@@ -722,6 +740,8 @@ public class NeckDraw : MonoBehaviour
 
 	void QuerySetObjectsResetColor() 
 	{
+		QuerySetFretPanelObjectsStringColor();
+
 		foreach(GameObject tObj in MarkerObjectList)
 		{
 			MarkerObj objectScript = tObj.GetComponent<MarkerObj> ();

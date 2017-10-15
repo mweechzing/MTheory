@@ -16,6 +16,12 @@ public class FretPanelObj : MonoBehaviour
 
 	public GameObject backingSprite;
 	public GameObject textObj;
+	public GameObject GString6;
+	public GameObject GString5;
+	public GameObject GString4;
+	public GameObject GString3;
+	public GameObject GString2;
+	public GameObject GString1;
 
 
 	private int _id = 0;
@@ -36,6 +42,13 @@ public class FretPanelObj : MonoBehaviour
 		}
 	}		
 
+	public void SetObjectColor(Color c) 
+	{
+		if (backingSprite != null) {
+			backingSprite.GetComponent<Renderer> ().material.color = c;
+		}
+	}		
+
 	public void SetFretLabel(string label, int size = 0) 
 	{
 		TextMeshPro tp = GetComponentInChildren<TextMeshPro> ();
@@ -50,6 +63,29 @@ public class FretPanelObj : MonoBehaviour
 	{
 		gameObject.SetActive (status);
 	}
+
+	public void SetStringColors(Color colorAux1, Color colorAux2) 
+	{
+		if (GString6 != null) {
+			GString6.GetComponent<Renderer> ().material.color = colorAux1;
+		}
+		if (GString5 != null) {
+			GString5.GetComponent<Renderer> ().material.color = colorAux1;
+		}
+		if (GString4 != null) {
+			GString4.GetComponent<Renderer> ().material.color = colorAux1;
+		}
+		if (GString3 != null) {
+			GString3.GetComponent<Renderer> ().material.color = colorAux2;
+		}
+		if (GString2 != null) {
+			GString2.GetComponent<Renderer> ().material.color = colorAux2;
+		}
+		if (GString1 != null) {
+			GString1.GetComponent<Renderer> ().material.color = colorAux2;
+		}
+	}		
+
 
 }
 

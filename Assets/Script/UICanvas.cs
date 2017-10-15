@@ -55,13 +55,17 @@ public class UICanvas : MonoBehaviour
 		if (OnOff == true) {
 			MainPanel.gameObject.SetActive (false);
 			HeaderDisplayButton.gameObject.SetActive(false);
+
 			SoundOptions.gameObject.SetActive(true);
+
 			TapPad.Instance.DragEnabled = false;
 			OnOff = false;
 		} else {
 			MainPanel.gameObject.SetActive (true);
 			HeaderDisplayButton.gameObject.SetActive(true);
+
 			SoundOptions.gameObject.SetActive(false);
+
 			TapPad.Instance.DragEnabled = true;
 			OnOff = true;
 		}

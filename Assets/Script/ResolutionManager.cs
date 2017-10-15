@@ -34,9 +34,11 @@ public class ResolutionManager : MonoBehaviour
 		float w = screenRes.width;
 		float h = screenRes.height;
 
+		#if UNITY_EDITOR
 		//debug
-		w = 1536;
-		h = 2048;
+		w = 2048;
+		h = 2732;
+		#endif
 
 
 		float targetaspect = 1536.0f / 2048.0f;
