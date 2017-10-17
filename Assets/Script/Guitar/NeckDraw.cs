@@ -177,6 +177,15 @@ public class NeckDraw : MonoBehaviour
 		QuerySetMarkerObjectsRotation();
 
 
+		float value1 = (float)SaveState.Instance.ReadSaveStateInt("audioSlider1");
+		float value2 = (float)SaveState.Instance.ReadSaveStateInt("audioSlider2");
+		float value3 = (float)SaveState.Instance.ReadSaveStateInt("audioSlider3");
+		int scaleVoiceIndex = SaveState.Instance.ReadSaveStateInt("scaleVoiceIndex");
+		int pedalToneIndex = SaveState.Instance.ReadSaveStateInt("pedalToneIndex");
+		AudioController.Instance.SetSoundOptions (scaleVoiceIndex, value1, (int)value3, pedalToneIndex, value2, 0);
+
+
+
 	}
 
 	void Update () 

@@ -37,6 +37,14 @@ public class TapPad : MonoBehaviour
 	void Update () 
 	{}
 
+
+	public void SetNeckSliderAmount (float s) 
+	{
+		float camPercent = (s * camMaxY) / 100;
+		Camera.main.transform.position = new Vector3 (camDefault.x, camPercent, camDefault.z);
+	}
+
+
 	void OnMouseDown()
 	{
 		if (DragEnabled == false)
@@ -99,9 +107,15 @@ public class TapPad : MonoBehaviour
 
 		Camera.main.transform.position = new Vector3 (camDefault.x, dy, camDefault.z);
 
+
+		float camPercent = (dy * 100) / camMaxY;
+
+		UICanvas.Instance.SetNeckSliderValue(camPercent);
+
 		//Debug.Log ("dy = " + dy );
 
 	}
+
 	void OnMouseUp()
 	{
 		if (DragEnabled == false)

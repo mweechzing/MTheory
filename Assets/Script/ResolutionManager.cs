@@ -36,8 +36,8 @@ public class ResolutionManager : MonoBehaviour
 
 		#if UNITY_EDITOR
 		//debug
-		w = 2048;
-		h = 2732;
+		w = 1536;
+		h = 2048;
 		#endif
 
 

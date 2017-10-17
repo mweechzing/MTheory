@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UICanvas : MonoBehaviour 
 {
@@ -8,6 +9,7 @@ public class UICanvas : MonoBehaviour
 	public GameObject SoundOptions;
 	public GameObject HeaderDisplayButton;
 	public GameObject FormGridListDisplay;
+	public GameObject DisplayScrollSlider;
 
 	private bool OnOff = true;
 	private bool FormListState = false;
@@ -25,6 +27,33 @@ public class UICanvas : MonoBehaviour
 	{
 		FormGridListDisplay.SetActive(false);
 		SoundOptions.SetActive(false);
+
+
+
+		Slider slider1 = DisplayScrollSlider.GetComponent<Slider> ();
+		//slider1.value = value1;
+
+	}
+
+	public void SetNeckSliderValue (float value) 
+	{
+		Slider slider1 = DisplayScrollSlider.GetComponent<Slider> ();
+		slider1.value = value;
+	}
+		
+	public void OnNeckSliderChanged () 
+	{
+		Slider slider1 = DisplayScrollSlider.GetComponent<Slider> ();
+		float value1 = slider1.value;
+
+		TapPad.Instance.SetNeckSliderAmount(value1);
+	}
+
+	void Update () 
+	{
+
+
+
 	}
 	
 	public void ToggleMainPanel () 
