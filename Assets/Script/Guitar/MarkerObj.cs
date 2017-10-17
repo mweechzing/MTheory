@@ -116,6 +116,10 @@ public class MarkerObj : MonoBehaviour
 		gameObject.SetActive (status);
 	}
 
+	public void SetMarkerScale(float scale)
+	{
+		transform.localScale = new Vector3 (scale, scale, scale);
+	}
 
 
 	public void StartColorAnim (Color newColor, float speed) 

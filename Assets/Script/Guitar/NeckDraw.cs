@@ -38,7 +38,7 @@ public class NeckDraw : MonoBehaviour
 	private GameObject KeyboardObjectContainer;
 
 	public ColorSet[] NeckNoteColors;
-	public ColorSet[] NeckFretColors;
+	//public ColorSet[] NeckFretColors;
 
 	public ColorSet FormColorCodes;
 
@@ -61,6 +61,7 @@ public class NeckDraw : MonoBehaviour
 	private bool firstPass = true;
 
 	private float MarkerLabelRotation = 0f;
+	private float MarkerScale = 0.75f;
 
 	//note animation
 	private bool AnimateNeck = false;
@@ -114,6 +115,7 @@ public class NeckDraw : MonoBehaviour
 		fretStartY += vScale.y * 0.32f;
 
 
+		MarkerScale = (float)SaveState.Instance.ReadSaveStateFloat("markerScale");
 
 		_drawMode = (DrawMode)SaveState.Instance.ReadSaveStateInt("drawMode");
 
@@ -210,18 +212,18 @@ public class NeckDraw : MonoBehaviour
 		}
 	}
 
-	public void ToggleNeckScale () 
+	public void ToggleMarkerScale () 
 	{
-		if (sizeScale == 0.5f) {
-			sizeScale = 1f;
+		if (MarkerScale == 0.75f) {
+			MarkerScale = 1f;
 		} else {
-			sizeScale = 0.5f;
+			MarkerScale = 0.75f;
 		}
 
-		float s = targetScale * sizeScale;
-		Debug.Log ("ToggleNeckScale new scale = " + s);
+		QuerySetMarkerObjectsScale ();
 
-		gameObject.transform.localScale = new Vector2 (s, s);
+		SaveState.Instance.WriteSaveStateFloat("markerScale", MarkerScale);
+
 	}
 
 	public void ReApplyForm(int formIndex)
@@ -345,7 +347,7 @@ public class NeckDraw : MonoBehaviour
 
 				//default storage location
 				_sfObj.transform.position = new Vector2 (StoragePosition.transform.position.x, StoragePosition.transform.position.y);
-				_sfObj.transform.localScale = new Vector2 (targetScale, targetScale);
+				_sfObj.transform.localScale = new Vector2 (targetScale * MarkerScale, targetScale * MarkerScale);
 
 				MarkerObj objectScript = _sfObj.GetComponent<MarkerObj> ();
 				objectScript.ID = t;
@@ -432,6 +434,16 @@ public class NeckDraw : MonoBehaviour
 			objectScript._State = MarkerObj.eState.Loaded;
 		}
 	}
+
+	void QuerySetMarkerObjectsScale() 
+	{
+		foreach(GameObject tObj in MarkerObjectList)
+		{
+			MarkerObj objectScript = tObj.GetComponent<MarkerObj> ();
+			objectScript.SetMarkerScale (targetScale * MarkerScale);
+		}
+	}
+		
 
 	void QuerySetFretPanelObjectsLoaded() 
 	{

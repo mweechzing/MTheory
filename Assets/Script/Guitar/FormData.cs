@@ -555,6 +555,7 @@ public class FormData : MonoBehaviour
 		"5",
 		"6",
 		"7",
+		"8",
 	};
 
 	[HideInInspector]

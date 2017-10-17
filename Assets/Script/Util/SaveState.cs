@@ -66,6 +66,28 @@ public class SaveState : MonoBehaviour
 
 	}
 
+	public void WriteSaveStateFloat (string key, float value) 
+	{
+		PlayerPrefs.SetFloat (key, value);
+		PlayerPrefs.Save ();
+
+	}
+
+	public float ReadSaveStateFloat (string key) 
+	{
+		float value = 0;
+
+		if(PlayerPrefs.HasKey(key)) {
+			value = PlayerPrefs.GetFloat (key);
+		} else {
+
+			value = 1f;
+			WriteSaveStateFloat (key, value);
+		}
+
+		return value;
+
+	}
 
 
 
