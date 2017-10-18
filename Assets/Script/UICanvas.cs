@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using System;
 
 public class UICanvas : MonoBehaviour 
 {
@@ -123,5 +125,31 @@ public class UICanvas : MonoBehaviour
 		
 		NeckDraw.Instance.RefreshDrawArea(NeckDraw.DrawMode.Piano);
 	}
+
+
+
+	#if UNITY_EDITOR
+	private bool m_screenShotLock = false;
+
+	private void LateUpdate()
+	{
+		if (Input.GetKeyDown(KeyCode.S) && !m_screenShotLock)
+		{
+			m_screenShotLock = true;
+			StartCoroutine(TakeScreenShotCo());
+		}
+	}
+
+	private IEnumerator TakeScreenShotCo()
+	{
+		yield return new WaitForEndOfFrame();
+
+		var directory = new DirectoryInfo(Application.dataPath);
+		var path = Path.Combine(directory.Parent.FullName, string.Format("Screenshot_{0}.png", DateTime.Now.ToString("yyyyMMdd_Hmmss")));
+		Debug.Log("Taking screenshot to " + path);
+		ScreenCapture.CaptureScreenshot(path);
+		m_screenShotLock = false;
+	}
+	#endif
 
 }

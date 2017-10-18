@@ -35,6 +35,8 @@ public class StyleButton : MonoBehaviour
 
 		//Debug.LogError ("Send Message form index = " + KeyIndex);
 		NeckDraw.Instance.SetCurrentStyleIndex (StyleIndex);
+
 	}
+
 }
 
