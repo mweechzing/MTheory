@@ -180,6 +180,15 @@ public class FormData : MonoBehaviour
 
 		8,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
 
+		1,3,1,2,1,3,1,8,0,0,0,0,  0,0,0,0,//1312131  Double Harmonic Major
+		3,1,2,1,3,1,1,8,0,0,0,0,  0,0,0,0,//3121311  Double Harmonic Major
+		1,2,1,3,1,1,3,8,0,0,0,0,  0,0,0,0,//1213113  Double Harmonic Major
+		2,1,3,1,1,3,1,8,0,0,0,0,  0,0,0,0,//2131131  Double Harmonic Major
+		1,3,1,1,3,1,2,8,0,0,0,0,  0,0,0,0,//1311312  Double Harmonic Major
+		3,1,1,3,1,2,1,8,0,0,0,0,  0,0,0,0,//3113121  Double Harmonic Major
+		1,1,3,1,2,1,3,8,0,0,0,0,  0,0,0,0,//1131213  Double Harmonic Major
+
+		9,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,	//space
 
 		3,4,5,8,0,0,0,0,0,0,0,0,  0,0,0,0,//3 4 5  Peruvian tritonic 2 	
 		3,7,2,8,0,0,0,0,0,0,0,0,  0,0,0,0,//3 7 2  Ute tritonic
@@ -372,6 +381,16 @@ public class FormData : MonoBehaviour
 		"Messiaen trunc mode 5 inv",
 		"Messiaen trun mode 6",
 		"Messiaen trunc mode 6 inv",
+
+		"space",
+
+		"Double Harmonic Major",
+		"Lydian #2 #6",
+		"Ultra Phrygian",
+		"Hungarian Minor",
+		"Oriental",
+		"Ioninan Aug #2",
+		"Locrian bb3 bb7",
 
 		"space",
 
