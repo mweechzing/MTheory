@@ -34,11 +34,21 @@ public class ResolutionManager : MonoBehaviour
 		float w = screenRes.width;
 		float h = screenRes.height;
 
-		#if UNITY_EDITOR
-		//debug
-		w = 1242;
-		h = 2208;
-		#endif
+#if UNITY_EDITOR
+
+		int debugSize = 2;
+
+		if(debugSize == 0) {//screen shot large
+			w = 2048;
+			h = 2732;
+		} else if(debugSize == 1){//Screen shot small
+			w = 1242;
+			h = 2208;
+		} else {//testing res
+			w = 1536;
+			h = 2048;
+		}
+#endif
 
 
 		float targetaspect = 1536.0f / 2048.0f;

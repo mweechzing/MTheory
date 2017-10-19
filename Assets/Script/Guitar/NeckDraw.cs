@@ -61,7 +61,7 @@ public class NeckDraw : MonoBehaviour
 	private bool firstPass = true;
 
 	private float MarkerLabelRotation = 0f;
-	private float MarkerScale = 0.75f;
+	private float MarkerScale = 0.85f;
 
 	//note animation
 	private bool AnimateNeck = false;
@@ -214,16 +214,18 @@ public class NeckDraw : MonoBehaviour
 
 	public void ToggleMarkerScale () 
 	{
-		if (MarkerScale == 0.75f) {
+		if (MarkerScale == 0.85f) {
 			MarkerScale = 1f;
 		} else {
-			MarkerScale = 0.75f;
+			MarkerScale = 0.85f;
 		}
 
 		QuerySetMarkerObjectsScale ();
 
 		SaveState.Instance.WriteSaveStateFloat("markerScale", MarkerScale);
 
+		if(AudioController.Instance != null)
+			AudioController.Instance.PlayButtonClick(0);
 	}
 
 	public void ReApplyForm(int formIndex)
