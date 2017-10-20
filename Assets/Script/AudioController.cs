@@ -202,6 +202,18 @@ public class AudioController : MonoBehaviour
 
 
 				}
+
+				int restChance = Random.Range (0, 100);
+
+				if (restChance < RandomChance) {
+
+					int restChance2 = Random.Range (0, 100);
+					if (restChance2 < 25) {
+						skipNote = true;
+					}
+
+				}
+
 					
 				if(skipNote == false) {
 					PlayNote (noteToPlay);
